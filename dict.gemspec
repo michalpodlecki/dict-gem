@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{dict}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
   s.author = 'Aleksander Gozdek'
   s.date = %q{2012-07-02}
   s.summary = %q{Gem made for dictionary application}
