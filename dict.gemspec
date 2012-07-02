@@ -8,6 +8,6 @@ Gem::Specification.new do |s|
     "lib/dict.rb"
   ]
   s.require_paths = ["lib"]
-  s.executable = 'translation'  
+  s.executable = 'translate'  
 end
 
