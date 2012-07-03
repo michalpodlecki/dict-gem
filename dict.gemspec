@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name = %q{dict}
-  s.version = "0.0.1"
-  s.author = 'Aleksander Gozdek'
-  s.date = %q{2012-07-02}
+  s.version = "0.0.2"
+  s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski']
+  s.date = %q{2012-07-03}
   s.summary = %q{Gem made for dictionary application}
   s.files = [
     "lib/dict.rb"
