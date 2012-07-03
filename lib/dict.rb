@@ -3,6 +3,7 @@
 
 require 'uri'
 require 'net/http'
+require 'timeout'
 
 module Dict
   class Translation
@@ -17,12 +18,13 @@ module Dict
     end
 
     def self.getResponse(word, time = 3600)
-      uri = URI.escape("http://dict-app-staging.shellyapp.com/#{word}")
-      time_start = Time.now
-      puts Net::HTTP.get(uri)
-      time_end = Time.now
-      puts time_end - time_start
+      uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{word}")) 
+      Timeout::timeout(time.to_i) do
+        puts Net::HTTP.get(uri)
+      end
     end
+
+
   end
 end
 
