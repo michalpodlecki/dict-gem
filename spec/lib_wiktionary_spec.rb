@@ -2,11 +2,15 @@
 require_relative '../lib/wiktionary'
 
 describe Wiktionary do
+  it "should be an argument given" do
+    expect { Wiktionary.new }.to raise_error ArgumentError
+  end
+
 	it "should return an empty array" do
   	word = "dziwneslowo"
 		wiki = Wiktionary.new(word)
 		wiki.translate.should be_a(Array)
-		wiki.translate.size.should == 0
+		wiki.translate[0].size.should == 0
 	end
 	
 	it "should return an one element array, containing =war= string" do
@@ -15,13 +19,20 @@ describe Wiktionary do
 		
 		wiki.translate.should be_a(Array)
 
-		wiki.translate[0].should eq("war")
+		wiki.translate[0][0].should eq("war")
 	end
 	
-	it "should return an two element array, containing [\"car\",\"automobile\"]" do
+	it "should return an two element array of translations containing [\"car\",\"automobile\"]" do
 		word = "samochód"
 		wiki = Wiktionary.new word
-		wiki.translate.size.should == 2
-		wiki.translate.should eq(["car","automobile"])
+		wiki.translate[0].size.should == 2
+		wiki.translate[0].should eq(["car","automobile"])
+	end
+	
+	it "should return a proper translations for 'car' word" do
+	  word = "samochód"
+	  wiki = Wiktionary.new(word)
+	  wiki.translate[1][0].should eq("She drove her car to the mall.")
+	  wiki.translate[1][1].should eq("The conductor linked the cars to the locomotive.")
 	end
 end
