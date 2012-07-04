@@ -22,6 +22,8 @@ module Dict
       Timeout::timeout(time.to_i) do
         puts Net::HTTP.get(uri)
       end
+      rescue => ex
+        puts "Timeout for the query."
     end
   end
 end
