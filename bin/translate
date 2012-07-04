@@ -14,10 +14,10 @@ if ARGV[0] == "status"
   puts Dict::Translation.status
 elsif ARGV[1] == "time"
   if !ARGV[2].nil?
-    Dict::Translation.getResponse(ARGV[0], ARGV[2])
+    puts Dict::Translation.get_response(ARGV[0], ARGV[2])
   else
-    Dict::Translation.getResponse(ARGV[0])
+    puts Dict::Translation.get_response(ARGV[0])
   end
 else
-  Dict::Translation.getResponse(ARGV[0])
+  puts Dict::Translation.get_response(ARGV[0])
 end

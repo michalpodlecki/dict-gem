@@ -17,7 +17,7 @@ module Dict
       res.message
     end
 
-    def self.getResponse(word, time = 3600)
+    def self.get_response(word, time = 3600)
       uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{word}"))
       begin
         Timeout::timeout(time.to_i) do
