@@ -18,13 +18,17 @@ module Dict
     end
 
     def self.getResponse(word, time = 3600)
-      uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{word}")) 
-      Timeout::timeout(time.to_i) do
-        puts Net::HTTP.get(uri)
+      uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{word}"))
+      begin
+        Timeout::timeout(time.to_i) do
+          puts Net::HTTP.get(uri)
+        end
+        
+        rescue => ex
+          puts "Timeout for the query."
+          {:code => 408, :describe => "Request Timeout"}
+        end
       end
-      rescue => ex
-        puts "Timeout for the query."
-    end
   end
 end
 
