@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 
 require 'dict'
+require 'slop'
 
 if ARGV.empty?
   puts "Please, enter the word to translate."
   exit
 end
-
-puts Dict::Translation.getResponse(ARGV[0])
 
 if ARGV[0] == "status"
   print "Status API: "
