@@ -11,7 +11,7 @@ end
 
 if ARGV[0] == "status"
   print "Status API: "
-  print Dict::Translation.status
+  puts Dict::Translation.status
 elsif ARGV[1] == "time"
   if !ARGV[2].nil?
     Dict::Translation.getResponse(ARGV[0], ARGV[2])

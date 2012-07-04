@@ -1,9 +1,7 @@
-require 'rake'
-
 Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop'
   s.name = %q{dict}
-  s.version = "0.0.4"
+  s.version = "0.0.5"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski']
   s.email = ['mtczerwinski@gmail.com']
   s.date = %q{2012-07-03}
@@ -15,9 +13,9 @@ Gem::Specification.new do |s|
   ]
   s.require_paths = ["lib"]
   s.executable = 'translate'
-  s.description = <<-KONIEC
+  s.description = <<-END
     Dict is a client of API which you lets you use multiple dictionaries.
-    Dict is a OpenSource Project.
-  KONIEC
+    Dict is an open source project.
+  END
   s.homepage = 'https://github.com/Ragnarson/dict-gem'
 end
