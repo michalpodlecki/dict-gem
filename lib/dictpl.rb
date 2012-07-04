@@ -27,10 +27,8 @@ end
 
 
 # example of usage
-# comment these lines if You want to use rspec
 word = ARGV[0]
 word ||= ""
 
 translation = Dictpl.new word
 puts translation.translate
-	
