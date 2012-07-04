@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
     Dict is an open source project.
   END
   s.homepage = 'https://github.com/Ragnarson/dict-gem'
+  s.add_dependency 'nokogiri'
 end
