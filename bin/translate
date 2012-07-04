@@ -4,20 +4,34 @@
 require 'dict'
 require 'slop'
 
-if ARGV.empty?
-  puts "Please, enter the word to translate."
-  exit
+if ARGV.empty? then puts "Please enter the word. (-h for help)" ; exit end
+
+opts = Slop.parse do 
+  banner "Usage: $translate word [Options] (-h for help)"
+  on '-h', '--help', 'help'
+  on '-t', '--time', 'time in seconds', :as => :int
+  on '-d', '--dict', 'dictonaries: all, wiki etc.'
+  on '-s', '--status', 'status of API'
 end
 
-if ARGV[0] == "status"
-  print "Status API: "
-  puts Dict::Translation.status
-elsif ARGV[1] == "time"
-  if !ARGV[2].nil?
-    puts Dict::Translation.get_response(ARGV[0], ARGV[2])
-  else
-    puts Dict::Translation.get_response(ARGV[0])
-  end
-else
+# problem with situation where first word after
+# translate is --help or -h ...
+unless ARGV[0].nil?
   puts Dict::Translation.get_response(ARGV[0])
 end
+
+unless opts[:time].nil?
+  puts Dict::Translation.get_response(ARGV[0],opts[:time])
+end
+
+unless opts[:dict].nil?
+  # todo: refactor get_response because it has not a dict
+  # parameter
+end
+
+puts opts if opts[:help]
+puts Dict::Translation.status unless opts[:status].nil?
+
+
+
+
