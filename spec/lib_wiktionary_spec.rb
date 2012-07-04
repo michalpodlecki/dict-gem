@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*
 require_relative '../lib/wiktionary'
 
 describe Wiktionary do
@@ -15,5 +16,12 @@ describe Wiktionary do
 		wiki.translate.should be_a(Array)
 
 		wiki.translate[0].should eq("war")
+	end
+	
+	it "should return an two element array, containing [\"car\",\"automobile\"]" do
+		word = "samochód"
+		wiki = Wiktionary.new word
+		wiki.translate.size.should == 2
+		wiki.translate.should eq(["car","automobile"])
 	end
 end
