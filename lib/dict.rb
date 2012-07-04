@@ -21,7 +21,8 @@ module Dict
       uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{word}"))
       begin
         Timeout::timeout(time.to_i) do
-          puts Net::HTTP.get(uri)
+          res = Net::HTTP.get(uri)
+          "Success" unless res.empty?
         end
         
         rescue => ex
