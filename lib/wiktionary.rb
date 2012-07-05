@@ -1,11 +1,14 @@
+# encoding: utf-8
 require 'net/http'
 require 'nokogiri'
+require_relative 'result'
 
 class Wiktionary
   WIKI_URL = "http://en.wiktionary.org/wiki/"
   def initialize(word)
     if word.empty? then raise ArgumentError, "No word given." end
     escaped_word = word.downcase.tr(' ', '_')
+    @result = Result.new(escaped_word)
     @uri = URI(URI.escape(WIKI_URL + escaped_word))
   end
 
@@ -16,27 +19,32 @@ class Wiktionary
   #
   def translate
     req = Net::HTTP::Get.new(@uri.path)
-    response, translations, sentences = nil, [], []
+    response, translations = nil, []
     Net::HTTP.start(@uri.host, @uri.port) do |http|
       response = http.request(req).body
 
       doc = Nokogiri::HTML(response)
-      doc.css('div#mw-content-text h2:first .mw-headline').each do |lang|
-        raise "Given word is not polish." if lang.content != 'Polish'
+      polish = false
+      doc.css('div#mw-content-text h2 .mw-headline').each do |lang|
+        #raise "Given word is not polish." if lang.content != 'Polish'
+        (polish = true) if lang.content == 'Polish'
       end
+      return @result if !polish
+      #raise "Given word is not polish." if !polish
       doc.css('div#mw-content-text[lang=en] ol > li a').each do |link|
-        translations.push link.content
+        translations.push(link.content)
+        @result.add_translation(@result.term,link.content)
       end
 
-      translations.each do |item|
+     translations.each do |item|
         escaped_item = item.tr(' ', '_')
-        sentence = Nokogiri::HTML(Net::HTTP.get(URI(WIKI_URL + escaped_item)))
-        sentence.css('div#mw-content-text[lang=en] ol:first > li dl dd i').each do |s|
-          sentences.push s.content
+        example = Nokogiri::HTML(Net::HTTP.get(URI(WIKI_URL + escaped_item)))
+        example.css('div#mw-content-text[lang=en] ol:first > li dl dd i').each do |s|
+          @result.add_example(@result.term,s.content)
         end
       end
-
     end
-    [translations, sentences]
+    
+    @result
   end
 end
