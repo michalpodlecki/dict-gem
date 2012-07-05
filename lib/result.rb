@@ -1,6 +1,6 @@
 class Result
   attr_accessor :term, :dictionaries, :translations, :examples
-  def initialize(term,dictionaries = nil)
+  def initialize(term, dictionaries = nil)
     @term = term
     @dictionaries = dictionaries
     @translations = {}
@@ -27,7 +27,7 @@ class Result
   
   def each_translation
     @translations.each_pair do |term,translation|
-      yield term,translation
+      yield term, translation
     end
   end
 end
