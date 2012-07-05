@@ -8,33 +8,25 @@ if ARGV.empty? then puts "Please enter the word. (-h for help)" ; exit end
 
 opts = Slop.parse do 
   banner "Usage: $translate -w word [Options]"
-  on '-w', '--word', 'after this option is a word to translate'
-  on '-h', '--help', 'help'
-  on '-t', '--time', 'time in seconds', :as => :int
-  on '-d', '--dict', 'dictonaries: all, wiki etc.'
-  on '-s', '--status', 'status of API'
+  on '-w', :word=, 'after this option is a word to translate'
+  on '-h', :help=, 'help', :argument => :optional
+  on '-t', :time=, 'time in seconds, default: 300 seconds', :as => :int
+  on '-d', :dict=, 'dictionaries: all, wiki etc., default is all dictionaries'
+  on '-s', :status=, 'status of API', :argument => :optional
 end
 
+
+# translation
+puts Dict::Translation.get_response(opts[:word], opts[:time] || 300, opts[:dict] || "all") if opts.word?
+
+
+# help
+# -h is ignored when there is word to translate
+# probably always -h is nil
+puts opts if opts.help?
+
+# status
+puts Dict::Translation.status if opts.status?
+
+# for test
 puts opts.to_hash
-
-=begin
-# problem with situation where first word after
-# translate is --help or -h ...
-unless ARGV[0].nil?
-  puts Dict::Translation.get_response(ARGV[0])
-end
-
-unless opts[:time].nil?
-  puts Dict::Translation.get_response(ARGV[0],opts[:time])
-end
-
-unless opts[:dict].nil?
-  # todo: refactor get_response because it has not a dict
-  # parameter
-end
-=end
-puts opts if opts[:help]
-puts Dict::Translation.status unless opts[:status].nil?
-
-
-

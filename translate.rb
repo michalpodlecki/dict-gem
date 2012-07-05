@@ -17,21 +17,7 @@ end
 
 puts opts.to_hash
 
-=begin
-# problem with situation where first word after
-# translate is --help or -h ...
-unless ARGV[0].nil?
-  puts Dict::Translation.get_response(ARGV[0])
-end
 
-unless opts[:time].nil?
-  puts Dict::Translation.get_response(ARGV[0],opts[:time])
-end
 
-unless opts[:dict].nil?
-  # todo: refactor get_response because it has not a dict
-  # parameter
-end
-=end
 puts opts if opts[:help]
-puts Dict::Translation.status unless opts[:status].nil?
+puts "Status API: " << Dict::Translation.status unless opts[:status].nil?

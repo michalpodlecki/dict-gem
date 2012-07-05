@@ -4,12 +4,13 @@ Gem::Specification.new do |s|
   s.version = "0.0.6"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski']
   s.email = ['mtczerwinski@gmail.com']
-  s.date = %q{2012-07-04}
+  s.date = %q{2012-07-05}
   s.summary = %q{Gem made for dictionary application}
   s.files = [
     "lib/dict.rb",
     "lib/google.rb",
-    "lib/wiktionary.rb"
+    "lib/wiktionary.rb",
+    "lib/dictpl.rb"
   ]
   s.require_paths = ["lib"]
   s.executable = 'translate'

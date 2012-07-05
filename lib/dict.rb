@@ -17,8 +17,8 @@ module Dict
       res.message
     end
 
-    def self.get_response(word, time = 3600)
-      uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{word}"))
+    def self.get_response(word, time, dict)
+      uri = URI.parse(URI.escape("http://dict-app-staging.shellyapp.com/#{dict}/#{word}"))
       begin
         Timeout::timeout(time.to_i) do
           res = Net::HTTP.get(uri)
