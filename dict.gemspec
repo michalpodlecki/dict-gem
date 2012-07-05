@@ -1,14 +1,15 @@
 Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop'
+  s.add_dependency 'nokogiri'
   s.name = %q{dict}
-  s.version = "0.0.7"
-  s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski']
+  s.version = "0.0.8"
+  s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
   s.email = ['mtczerwinski@gmail.com']
   s.date = %q{2012-07-05}
   s.summary = %q{Gem made for dictionary application}
   s.files = [
     "lib/dict.rb",
-    "lib/google.rb",
+    "lib/result.rb",
     "lib/wiktionary.rb",
     "lib/dictpl.rb",
     "lib/result.rb"
@@ -20,5 +21,5 @@ Gem::Specification.new do |s|
     Dict is an open source project.
   END
   s.homepage = 'https://github.com/Ragnarson/dict-gem'
-  s.add_dependency 'nokogiri'
+
 end

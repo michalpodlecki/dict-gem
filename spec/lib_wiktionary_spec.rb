@@ -37,4 +37,11 @@ describe Wiktionary do
     result.examples[word][0].should eq("She drove her car to the mall.")
     result.examples[word][1].should eq("The conductor linked the cars to the locomotive.")
   end
+
+  it "should explode when i ask about english word" do
+    word = "field"
+    wiki = Wiktionary.new(word)
+    result = wiki.translate
+    puts result
+  end
 end
