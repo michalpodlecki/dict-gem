@@ -10,7 +10,8 @@ Gem::Specification.new do |s|
     "lib/dict.rb",
     "lib/google.rb",
     "lib/wiktionary.rb",
-    "lib/dictpl.rb"
+    "lib/dictpl.rb",
+    "lib/result.rb"
   ]
   s.require_paths = ["lib"]
   s.executable = 'translate'
