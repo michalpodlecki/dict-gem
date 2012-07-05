@@ -14,11 +14,12 @@ class Wiktionary
   end
 
   #
-  # Method returns an array of translations and word usage examples
-  # For instance to given word 'samochód' it returns:
-  # [["car","automobile"],["She drove her car to the mall.", 
-  # "The conductor linked the cars to the locomotive.", "The 11:10 to 
-  # London was operated by a 4-car diesel multiple unit"]
+  # Method returns an Result Object containing given word, translations, word usage examples.
+  # Usage example:
+  # result = Wiktionary.new("samochód").translate
+  # result.term         # => "samochód"
+  # result.translations # => ["car","automobile"]
+  # result.examples     # => ["She drove her car to the mall.","The conductor linked the cars to the locomotive.", ...]
   #
   def translate
     req = Net::HTTP::Get.new(@uri.path)
