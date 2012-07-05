@@ -35,4 +35,9 @@ describe Wiktionary do
 	  wiki.translate[1][0].should eq("She drove her car to the mall.")
 	  wiki.translate[1][1].should eq("The conductor linked the cars to the locomotive.")
 	end
+	
+	it "should raise an error because of not polish word" do
+	  wiki = Wiktionary.new("field")
+	  expect { wiki.translate }.to raise_error("Given word is not polish.")
+	end
 end

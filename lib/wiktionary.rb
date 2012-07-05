@@ -9,6 +9,11 @@ class Wiktionary
     @uri = URI(URI.escape(WIKI_URL + escaped_word))
   end
 
+  #
+  # Method returns an array of translations and word usage examples
+  # For instance to given word 'samochód' it returns:
+  # [["car","automobile"],["She drove her car to the mall.", "The conductor linked the cars to the locomotive.", "The 11:10 to    London was operated by a 4-car diesel multiple unit"]
+  #
   def translate
     req = Net::HTTP::Get.new(@uri.path)
     response, translations, sentences = nil, [], []
@@ -16,6 +21,9 @@ class Wiktionary
       response = http.request(req).body
 
       doc = Nokogiri::HTML(response)
+      doc.css('div#mw-content-text h2:first .mw-headline').each do |lang|
+        raise "Given word is not polish." if lang.content != 'Polish'
+      end
       doc.css('div#mw-content-text[lang=en] ol > li a').each do |link|
         translations.push link.content
       end
@@ -23,7 +31,7 @@ class Wiktionary
       translations.each do |item|
         escaped_item = item.tr(' ', '_')
         sentence = Nokogiri::HTML(Net::HTTP.get(URI(WIKI_URL + escaped_item)))
-        sentence.css('div#mw-content-text[lang=en] ol > li dl dd i').each do |s|
+        sentence.css('div#mw-content-text[lang=en] ol:first > li dl dd i').each do |s|
           sentences.push s.content
         end
       end
