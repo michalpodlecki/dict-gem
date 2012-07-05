@@ -15,18 +15,12 @@ opts = Slop.parse do
   on '-s', :status=, 'status of API', :argument => :optional
 end
 
-
 # translation
 puts Dict::Translation.get_response(opts[:word], opts[:time] || 300, opts[:dict] || "all") if opts.word?
 
-
 # help
-# -h is ignored when there is word to translate
-# probably always -h is nil
 puts opts if opts.help?
 
 # status
 puts Dict::Translation.status if opts.status?
 
-# for test
-puts opts.to_hash

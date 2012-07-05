@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop'
   s.name = %q{dict}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski']
   s.email = ['mtczerwinski@gmail.com']
   s.date = %q{2012-07-05}
