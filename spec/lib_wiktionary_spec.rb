@@ -14,10 +14,10 @@ describe Wiktionary do
 		result.translations.size.should == 0
 	end
 	
-	it "should return an one element array, containing =war= string" do
-  	word = "wojna"
-		wiki = Wiktionary.new(word)
-		
+  it "should return an one element array, containing =war= string" do
+    word = "wojna"
+    wiki = Wiktionary.new(word)
+
 		wiki.translate.translations[word].should be_a(Array)
 		wiki.translate.translations[word].first.should eq("war")
 	end
@@ -37,9 +37,5 @@ describe Wiktionary do
 	  result.examples[word][0].should eq("She drove her car to the mall.")
 	  result.examples[word][1].should eq("The conductor linked the cars to the locomotive.")
 	end
-	
-	#it "should raise an error because of not polish word" do
-	#  wiki = Wiktionary.new("field")
-	#  expect { wiki.translate }.to raise_error("Given word is not polish.")
-	#end
+
 end

@@ -1,4 +1,5 @@
-# encoding: utf-8
+#!/usr/bin/ruby -w
+# -*- coding: utf-8 -*-
 require 'net/http'
 require 'nokogiri'
 require_relative 'result'
@@ -15,7 +16,9 @@ class Wiktionary
   #
   # Method returns an array of translations and word usage examples
   # For instance to given word 'samochód' it returns:
-  # [["car","automobile"],["She drove her car to the mall.", "The conductor linked the cars to the locomotive.", "The 11:10 to    London was operated by a 4-car diesel multiple unit"]
+  # [["car","automobile"],["She drove her car to the mall.", 
+  # "The conductor linked the cars to the locomotive.", "The 11:10 to 
+  # London was operated by a 4-car diesel multiple unit"]
   #
   def translate
     req = Net::HTTP::Get.new(@uri.path)

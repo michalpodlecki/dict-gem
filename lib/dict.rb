@@ -7,8 +7,8 @@ require 'timeout'
 
 module Dict
   class Translation
-    def initialize
-        @word = ARGV[0]
+    def initialize(word)
+        @word = word#ARGV[0]
     end
     
     def self.status(adres = "http://dict-app-staging.shellyapp.com/")
@@ -25,11 +25,10 @@ module Dict
           "Success" unless res.empty?
         end
         
-        rescue => ex
+        rescue #=> ex
           puts "Timeout for the query."
           {:code => 408, :describe => "Request Timeout"}
-        end
       end
+    end
   end
 end
-

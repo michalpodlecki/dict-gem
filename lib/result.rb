@@ -3,7 +3,8 @@ class Result
   def initialize(term,dictionaries = nil)
     @term = term
     @dictionaries = dictionaries
-    @translations, @examples = {}, {}
+    @translations = {}
+    @examples = {}
   end
   
   def add_translation(term, translation)
@@ -12,7 +13,6 @@ class Result
     else
       @translations[term] = [translation]
     end
-    
     self
   end
   
