@@ -2,17 +2,16 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop'
   s.add_dependency 'nokogiri'
   s.name = %q{dict}
-  s.version = "0.0.8"
+  s.version = "0.0.9"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
   s.email = ['mtczerwinski@gmail.com']
-  s.date = %q{2012-07-05}
+  s.date = %q{2012-07-06}
   s.summary = %q{Gem made for dictionary application}
   s.files = [
     "lib/dict.rb",
     "lib/result.rb",
     "lib/wiktionary.rb",
     "lib/dictpl.rb",
-    "lib/result.rb"
   ]
   s.require_paths = ["lib"]
   s.executable = 'translate'

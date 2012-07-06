@@ -23,3 +23,4 @@ puts opts if opts.help?
 
 # status
 puts Dict::Translation.status if opts.status?
+
