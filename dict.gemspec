@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'slop', '~> 3.3.2'
   s.add_dependency 'nokogiri', '~>1.5.5'
   s.name = %q{dict}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
   s.email = ['mtczerwinski@gmail.com']
   s.date = %q{2012-07-06}
