@@ -30,7 +30,7 @@ class Wiktionary
   def translate
     translations = []
     
-    doc = Nokogiri::HTML(Net::HTTP.get_response(@uri).body)
+    doc = get_html(@uri)
 
     return @result unless is_polish?(doc)
     
@@ -49,6 +49,11 @@ class Wiktionary
   end
   
   private
+
+  def get_html(uri)
+    Nokogiri::HTML(Net::HTTP.get(uri))
+  end
+
   def examples_of_translations(result, translations)
     translations.each do |item|
       example = Nokogiri::HTML(Net::HTTP.get(URI(WIKI_URL + item.tr(' ', '_'))))
@@ -59,9 +64,8 @@ class Wiktionary
   end
 
   def initialize_instance_arguments(word)
-    escaped_word = word.downcase.tr(' ', '_')
-    @result = Result.new(escaped_word)
-    @uri = URI(URI.escape(WIKI_URL + escaped_word))    
+    @result = Result.new(word.downcase.tr(' ', '_'))
+    @uri = URI(URI.escape(WIKI_URL + word.downcase.tr(' ', '_')))    
   end
   
   def check_arguments(word)
