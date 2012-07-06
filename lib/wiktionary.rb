@@ -18,8 +18,8 @@ class Wiktionary
   # Usage example:
   # result = Wiktionary.new("samochód").translate
   # result.term         # => "samochód"
-  # result.translations # => ["car","automobile"]
-  # result.examples     # => ["She drove her car to the mall.","The conductor linked the cars to the locomotive.", ...]
+  # result.translations # => {"samochód"=>["car", "automobile"]}
+  # result.examples     # => {"samochód"=>["She drove her car to the mall.", "The conductor linked the cars to the locomotive.", "The 11:10 to London was operated by a 4-car diesel multiple unit", "From the front-most car of the subway, he filmed the progress through the tunnel.", "We ordered five hundred cars of gypsum.", ...]}
   #
   def translate
     req = Net::HTTP::Get.new(@uri.path)
