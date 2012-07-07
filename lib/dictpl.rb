@@ -8,8 +8,8 @@ class Dictpl
 
   DICT_URL = "http://dict.pl/dict?word=" 
   def initialize(word)    
-		check_arguments(word)
-		initialize_instance_arguments(word)
+    check_arguments(word)
+    initialize_instance_arguments(word)
   end
   
   #
@@ -18,13 +18,16 @@ class Dictpl
   # {"krowa"=>["cow"], "krowa bliska wycielenia"=>["freshen of cow"], ... }
   #
   def translate
+
+    # Array contatining all words alternately
+    # Example: ["krowa", "cow", "krowa bliska wycielenia", "freshen of cow", ... ]
     @context_words = [] 
     
-    doc = Nokogiri::HTML(open(@uri))
+    doc = get_html(@uri)
     doc.xpath('//td[@class="resWordCol"]/a').each do |node|
       @context_words << node.text
     end
-    
+
     @mapped_words = {} # hash containing words with matched translations
 	
     @context_words.each_slice(2) do |word|	     
@@ -34,18 +37,17 @@ class Dictpl
     @result
   end
 
-	def check_arguments(word)												
-    if word.empty? then raise ArgumentError.new("No word given.") end
+  def check_arguments(word)
+    raise ArgumentError.new("No given word") if word.empty?
   end
-	
-	def initialize_instance_arguments(word)
-		@word = word
-    @uri = URI(URI.escape(DICT_URL + @word + "&lang=EN"))	
+
+  def initialize_instance_arguments(word)
+    @uri = URI(URI.escape(DICT_URL + word + "&lang=EN"))	
     @result = Result.new(word)
   end
-end
 
-a = Dictpl.new "samochód"
-a.translate.translations.each_pair do |key, value|
-  puts key + value.to_s
+  def get_html(uri)
+    Nokogiri::HTML(open(uri))
+  end
+
 end
