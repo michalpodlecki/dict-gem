@@ -20,6 +20,10 @@ class Result
       yield term, translation
     end
   end
+
+  def to_s
+    "#{@term}\n#{@dictionaries}\n#{@translations}\n#{@examples}\n"
+  end
   
   private
   def add_result(hash, key, value)

@@ -41,7 +41,6 @@ describe Wiktionary do
   it "should explode when i ask about english word" do
     word = "field"
     wiki = Wiktionary.new(word)
-    result = wiki.translate
-    puts result
+    wiki.translate == "pole"
   end
 end

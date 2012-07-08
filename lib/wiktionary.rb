@@ -21,31 +21,45 @@ require 'nokogiri'
 require_relative 'result'
 
 class Wiktionary
-  WIKI_URL = "http://en.wiktionary.org/wiki/"
+  WIKI_EN = "http://en.wiktionary.org/wiki/"
+  WIKI_PL = "http://pl.wiktionary.org/wiki/"
   def initialize(word)
     check_arguments(word)
     initialize_instance_arguments(word)
   end
   
   def translate
-    translations = []
-    
+    translations = []    
+    @uri = URI.parse(URI.escape("#{WIKI_EN}#{@word}"))  
     doc = get_html(@uri)
-
-    return @result unless is_polish?(doc)
     
-    doc.css('div#mw-content-text[lang=en] ol > li a').each do |link|
-      @result.add_translation(@result.term, link.content)
-    end
+    if is_polish?(doc)
+      doc.css('div#mw-content-text[lang=en] ol > li a').each do |link|
+        @result.add_translation(@result.term, link.content)
+      end      
       
-    
-    doc.css('div#mw-content-text[lang=en] ol > li a').each do |link|
-      translations.push(link.content)
-    end
+      doc.css('div#mw-content-text[lang=en] ol > li a').each do |link|
+        translations.push(link.content)
+      end
 
-    examples_of_translations(@result, translations)
+      get_examples_of_translations_en(@result, translations, WIKI_EN)
     
-    @result
+      @result
+    else
+      @uri = URI.parse(URI.escape("#{WIKI_PL}#{@word}"))  
+      doc = get_html(@uri)
+            
+      doc.css('div#mw-content-text dfn a').each do |link|
+        @result.add_translation(@result.term, link.content)
+      end      
+      
+      doc.css('div#mw-content-text dfn a').each do |link|
+        translations.push(link.content)
+      end
+
+      get_examples_of_translations_pl(@result, translations, WIKI_PL)
+      @result
+    end
   end
   
   private
@@ -54,10 +68,19 @@ class Wiktionary
     Nokogiri::HTML(Net::HTTP.get(uri))
   end
 
-  def examples_of_translations(result, translations)
+  def get_examples_of_translations_en(result, translations, adres)
     translations.each do |item|
-      example = Nokogiri::HTML(Net::HTTP.get(URI(WIKI_URL + item.tr(' ', '_'))))
+      example = Nokogiri::HTML(Net::HTTP.get(URI(adres + item.tr(' ', '_'))))
       example.css('div#mw-content-text[lang=en] ol:first > li dl dd i').each do |s|
+        result.add_example(result.term, s.content)
+      end
+    end
+  end
+  
+  def get_examples_of_translations_pl(result, translations, adres)
+    translations.each do |item|
+      example = Nokogiri::HTML(Net::HTTP.get(adres + item))
+      example.css('div#mw-content-text[lang=pl] dl dd').each do |s|
         result.add_example(result.term, s.content)
       end
     end
@@ -65,7 +88,7 @@ class Wiktionary
 
   def initialize_instance_arguments(word)
     @result = Result.new(word.downcase.tr(' ', '_'))
-    @uri = URI(URI.escape(WIKI_URL + word.downcase.tr(' ', '_')))    
+    @word = word  
   end
   
   def check_arguments(word)
