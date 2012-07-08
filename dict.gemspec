@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
-  s.add_runtime_dependency 'slop', '~> 3.3.2'
+  s.add_dependency 'slop', '~> 3.3.2'
   s.add_dependency 'nokogiri', '~>1.5.5'
   s.name = %q{dict}
-  s.version = "0.1.1"
+  s.version = "0.1.4"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
   s.email = ['mtczerwinski@gmail.com']
-  s.date = %q{2012-07-06}
+  s.date = Time.now.strftime('%Y-%m-%d')
   s.summary = %q{Gem made for dictionary application}
   s.files = [
     "lib/dict.rb",
