@@ -3,6 +3,7 @@
 
 require 'dict'
 require 'slop'
+require 'timeout'
 
 if ARGV.empty? then puts "Please enter the word. (-h for help)" ; exit end
 
@@ -10,24 +11,31 @@ opts = Slop.parse do
   banner "Usage: $translate -w word [Options]"
   on '-w', :word=, 'after this option is a word to translate'
   on '-h', :help=, 'help', :argument => :optional
-  on '-s', :services=, 'available services', :argument => :optional
-  #on '-t', :time=, 'time in seconds, default: 300 seconds', :as => :int
-  on '-d', :dict=, 'dictionaries: wiktionary, dictpl; default is all dictionaries'
+  #on '-s', :services=, 'available services', :argument => :optional
+  on '-t', :time=, 'time in seconds, default: 300', :as => :int
+  on '-d', :dict=, 'wiktionary, dictpl', :argument => :optional
 end
 
 # translation
 if opts.word?
-  if opts.dict?
-    puts Dict.get_single_dictionary_translations(opts[:word],opts[:dict])
-  else
-    puts Dict.get_all_dictionaries_translations(opts[:word])
+  begin
+    Timeout::timeout(opts[:time].to_i || 300) do
+      if opts.dict? && opts[:dict] != nil
+        puts Dict.get_single_dictionary_translations(opts[:word],opts[:dict])
+      else
+        puts Dict.get_all_dictionaries_translations(opts[:word])
+      end
+    end
+    
+    rescue
+      puts "Timeout for the query."
   end
 end
 
 # help
 puts opts if opts.help?
 
-# services
-puts Dict.available_services if opts.services?
+# available dictionaries
+puts Dict.available_services if opts.dict?
 
 
