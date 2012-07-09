@@ -5,18 +5,26 @@ require 'dict'
 require 'slop'
 require 'timeout'
 
-if ARGV.empty? then puts "Please enter the word. (-h for help)" ; exit end
-
-opts = Slop.parse do 
-  banner "Usage: $translate -w word [Options]"
-  on '-w', :word=, 'after this option is a word to translate'
-  on '-h', :help=, 'help', :argument => :optional
-  #on '-s', :services=, 'available services', :argument => :optional
-  on '-t', :time=, 'time in seconds, default: 300', :as => :int
-  on '-d', :dict=, 'wiktionary, dictpl', :argument => :optional
+if ARGV.empty?
+  puts "Please enter the word. (-h for help)"
+  exit
 end
 
-# translation
+begin
+  opts = Slop.parse do 
+    banner "Usage: $translate -w word [Options]"
+    on '-w', :word=, 'after this option is a word to translate'
+    on '-h', :help=, 'help', :argument => :optional
+    on '-t', :time=, 'time in seconds, default: 300', :as => :int
+    on '-d', :dict=, 'wiktionary, dictpl', :argument => :optional
+  end
+  
+rescue 
+  puts "Missing argument"
+  exit
+end
+
+
 if opts.word?
   begin
     Timeout::timeout(opts[:time].to_i || 300) do
@@ -27,7 +35,7 @@ if opts.word?
       end
     end
     
-    rescue
+    rescue 
       puts "Timeout for the query."
   end
 end
@@ -37,5 +45,4 @@ puts opts if opts.help?
 
 # available dictionaries
 puts Dict.available_services if opts.dict?
-
 
