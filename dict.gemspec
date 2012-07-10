@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
 
   s.name = %q{dict}
-  s.version = "0.1.7"
+  s.version = "0.1.8"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
   s.email = ['mtczerwinski@gmail.com']
   s.date = Time.now.strftime('%Y-%m-%d')
