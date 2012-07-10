@@ -20,8 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.executable = 'translate'
   s.description = <<-END
-    Dict is a client of API which you lets you use multiple dictionaries.
-    Dict is an open source project.
+    Dict is an open source dictionary aggregator.
   END
   s.homepage = 'https://github.com/Ragnarson/dict-gem'
 
