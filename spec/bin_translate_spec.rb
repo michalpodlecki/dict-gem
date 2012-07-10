@@ -8,22 +8,22 @@ describe "check_parameters?" do
   end
   
   it "should return false if ARGV is not empty" do
-    stub_const("ARGV", ["-w", "słowik", "-t", "36", "-d"])
+    stub_const("ARGV", ["słowik", "-t", "36", "-d"])
     Main::check_parameters?.should == false
   end
 end
 
 describe "parse_parameters" do
-  it "should return Hash for parameters -w słowik -t 36" do
-    stub_const("ARGV", ["-w", "słowik", "-t", "36"])
+  it "should return Hash for parameters słowik -t 36" do
+    stub_const("ARGV", ["słowik", "-t", "36"])
     opts = Main::parse_parameters
-    {:word=>"słowik", :help=>nil, :time=>"36", :dict=>nil}.should == opts.to_hash
+    {:help=>nil, :time=>"36", :dict=>nil}.should == opts.to_hash
   end
 
-  it "should return Hash for -w parameters słowik" do
-    stub_const("ARGV", ["-w", "słowik"])
+  it "should return Hash for parameters słowik" do
+    stub_const("ARGV", ["słowik"])
     opts = Main::parse_parameters
-    {:word=>"słowik", :help=>nil, :time=>nil, :dict=>nil}.should == opts.to_hash
+    {:help=>nil, :time=>nil, :dict=>nil}.should == opts.to_hash
   end
 end
 
@@ -36,10 +36,10 @@ describe "get_translations" do
   # end
 
   it "should return timeout message for word słowik and -t 5" do
-    stub_const("ARGV", ["-w", "słowik","-t","5"])
+    stub_const("ARGV", ["słowik","-t","5"])
     opts = Main.parse_parameters
     Dict.should_receive(:get_all_dictionaries_translations).
       and_return { sleep 20 }
-    Main.get_translations(opts).should == "Timeout for the query."
+    Main.get_translations(opts, "słowik").should == "Timeout for the query."
   end
 end
