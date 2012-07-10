@@ -42,10 +42,4 @@ describe "get_translations" do
       and_return { sleep 20 }
     Main.get_translations(opts, "słowik").should == "Timeout for the query."
   end
-
-  it "should go wrong if first word after name of program is '-h' " do
-    stub_const("ARGV",["-h"])
-    opts = Main.parse_parameters
-    Main.get_translations(opts, ARGV[0]).should_not == "Timeout for the query."
-  end
 end
