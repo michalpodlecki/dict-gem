@@ -1,8 +1,8 @@
-#!/usr/bin/ruby -w
 # -*- coding: utf-8 -*-
 
 require_relative 'wiktionary'
 require_relative 'dictpl'
+require 'json'
 
 module Dict
   class << self
@@ -12,18 +12,32 @@ module Dict
       available_services.each do |service|
         dictionaries[service] = get_single_dictionary_translations(word, service)
       end
-      
       dictionaries
+    end
+    
+    def print_all_dictionaries_translations(word)
     end
     
     def get_single_dictionary_translations(word, service)
       case service
       when 'wiktionary'
-        Wiktionary.new(word).translate
+        Wiktionary.new(word, WIKI_URL).translate
       when 'dictpl'
-        Dictpl.new(word).translate
-      else 'There\'s no such dictionary.'
+        Dictpl.new(word, DICT_URL).translate
+      else Dictionary.message
       end
+    end
+    
+    def print_single_dictionary_translations(word, service)
+      obj = get_single_dictionary_translations(word, service)
+      hash = obj.translate
+      hash.each do |k, v|
+        puts "#{k} - #{v}"
+      end
+    end
+    
+    def to_json(hash)
+      hash.to_json
     end
     
     def available_services
