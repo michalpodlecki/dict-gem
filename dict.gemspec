@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.summary = %q{Gem made for dictionary application}
   s.files = [
     "lib/dict.rb",
-    "lib/result.rb",
+    "lib/dictionary.rb",
     "lib/wiktionary.rb",
     "lib/dictpl.rb",
-    "module_main.rb"
+    "lib/module_main.rb"
   ]
   s.require_paths = ["lib"]
   s.executable = 'translate'
