@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
     "lib/module_main.rb"
   ]
   s.require_paths = ["lib"]
-  s.executable = 'translate'
+  s.executable = 'dict'
   s.description = <<-END
     Dict is an open source dictionary aggregator.
   END
