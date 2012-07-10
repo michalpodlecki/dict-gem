@@ -17,6 +17,7 @@ module Main
       on '-t', :time=, 'time in seconds, default: 300', :as => :int
       on '-d', :dict=, 'wiktionary, dictpl', :argument => :optional
     end
+    opts
   end
   
   def self.get_translations(opts)
@@ -39,7 +40,7 @@ module Main
   end
   
   def self.main(opts)
-
+    
     if check_parameters? == true
       puts "Please enter the word. (-h for help)"
       exit
