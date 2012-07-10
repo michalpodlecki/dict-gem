@@ -1,6 +1,9 @@
 Gem::Specification.new do |s|
   s.add_dependency 'slop', '~> 3.3.2'
   s.add_dependency 'nokogiri', '~>1.5.5'
+  s.add_development_dependency "rspec", "~> 2.8.0"
+  s.add_development_dependency "rake"
+
   s.name = %q{dict}
   s.version = "0.1.6"
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
