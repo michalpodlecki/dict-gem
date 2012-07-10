@@ -1,49 +1,34 @@
 # -*- encoding: utf-8 -*
+
 require_relative '../lib/wiktionary'
 
 describe Wiktionary do
-  it "should be an argument given" do
+  
+  it "should raise no given word exception" do
     expect { Wiktionary.new }.to raise_error ArgumentError
   end
-
-  it "should return an empty translations array" do
-    word = "dziwneslowo"
-    wiki = Wiktionary.new(word)
-    result = wiki.translate
-    result.translations.should be_a(Hash)
-    result.translations.size.should == 0
+  
+  it "should return an two element array of translations of word samochód containing [\"car\",\"automobile\"]" do
+    w = Wiktionary.new('samochód', WIKI_URL)
+    w.translate
+    w.translations.should == ["car", "automobile"]
+  end
+  
+  it "should return array with translations" do
+    w = Wiktionary.new('samochód', WIKI_URL)
+    w.translate
+    w.translations.should be_a(Array)
+  end
+  
+  it "should return array with examples of translated words" do
+    w = Wiktionary.new('samochód', WIKI_URL)
+    w.translate
+    w.examples.should be_a(Array)
   end
 
-  it "should return an one element array, containing =war= string" do
-    word = "wojna"
-    wiki = Wiktionary.new(word)
-
-    wiki.translate.translations[word].should be_a(Array)
-    wiki.translate.translations[word].first.should eq("war")
-  end
-
-  it "should return an two element array of translations containing [\"car\",\"automobile\"]" do
-    word = "samochód"
-    wiki = Wiktionary.new(word).translate
-    result = wiki.translations
-    result[word].size.should == 2
-    result[word].should eq(["car","automobile"])
-  end
-
-  it "should return a proper translations for 'car' word" do
-    word = "samochód"
-    wiki = Wiktionary.new(word)
-    result = wiki.translate
-    result.examples[word][0].should eq("She drove her car to the mall.")
-    result.examples[word][1].should eq("The conductor linked the cars to the locomotive.")
-  end
-
-  it "should replace spaces with underscores in multi-word queries" do
-    word = "podwyższać się"
-    wiki = Wiktionary.new(word)
-    result = wiki.translate
-    expected_term = "podwyższać_się"
-    result.term.should eq expected_term
+  it "should return a hash from array of paired values" do
+    w = Wiktionary.new('samochód', WIKI_URL)
+    w.make_hash_results(w.translate).should be_a(Hash)
   end
 
 end
