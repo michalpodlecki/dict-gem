@@ -47,7 +47,7 @@ module Dict
         end
 
         abort(opts.to_s) if opts.help?
-        parameters_valid? or abort("Please enter a word. (-h for help)")
+        abort("Please enter a word. (-h for help)") unless parameters_valid?
 
         puts get_translations(opts, ARGV[0])
       end
