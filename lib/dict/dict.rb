@@ -2,10 +2,11 @@
 
 require 'dict/wiktionary'
 require 'dict/dictpl'
-require 'json'
+require "yaml"
 
 module Dict
   class << self
+    # returns hash of every dictionary as keys and a hash of translations and examples as values
     def get_all_dictionaries_translations(word)
       dictionaries = Hash.new
 
@@ -15,33 +16,33 @@ module Dict
       dictionaries
     end
 
+    # prints translations from all dictionaries
     def print_all_dictionaries_translations(word)
+      available_services.each do |service|
+        print_single_dictionary_translations(word, service)
+      end
     end
 
+    # returns hash with translations as keys and examples as values
     def get_single_dictionary_translations(word, service)
       case service
       when 'wiktionary'
-        Wiktionary.new(word, WIKI_URL).translate
+        Wiktionary.new(word).translate
       when 'dictpl'
-        Dictpl.new(word, DICT_URL).translate
+        Dictpl.new(word).translate
       else Dictionary.message
       end
     rescue Dictionary::ConnectError
       "Couldn't connect to the service."
     end
 
+    # prints translations from single dictionary
     def print_single_dictionary_translations(word, service)
-      obj = get_single_dictionary_translations(word, service)
-      hash = obj.translate
-      hash.each do |k, v|
-        puts "#{k} - #{v}"
-      end
+      puts "Word '#{word.upcase}' translations from #{service.upcase} dictionary."
+      puts get_single_dictionary_translations(word, service).to_yaml
     end
 
-    def to_json(hash)
-      hash.to_json
-    end
-
+    # returns array of currently avaiable dictionaries
     def available_services
       ['wiktionary', 'dictpl']
     end

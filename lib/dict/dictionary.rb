@@ -5,13 +5,14 @@ require 'open-uri'
 module Dict
   class Dictionary
     attr_accessor :translations, :examples
-    def initialize(word, url)
+    def initialize(word)
       check_arguments(word)
       @translations = []
       @examples = []
-      @uri = URI(URI.escape(url + word.downcase.tr(' ', '_')))
+      @word = word
     end
 
+    # returns hash with translations as keys and examples as values
     def make_hash_results(arr)
       hash = arr.each_slice(2).inject({}) do |h, (key, value)|
         if h.has_key?(key)
@@ -23,7 +24,13 @@ module Dict
       @translations, @examples = hash.keys, hash.values
       hash
     end
+    
+    # returns uri of the dictionary
+    def get_uri(url, word = nil)
+      word == nil ? URI(URI.escape(url)) : URI(URI.escape(url + word.downcase.tr(' ', '_')))
+    end
 
+    # checks if word was given correctly
     def check_arguments(word)
       raise ArgumentError.new("No given word") if word.empty?
     end

@@ -7,10 +7,10 @@ DICT_URL = 'http://dict.pl/dict?word='
 
 module Dict
   class Dictpl < Dictionary
-    # Method returns hash with translations as keys and examples of using words as values
+    # returns hash with translations as keys and examples as values
     def translate
       context_words = []
-      Nokogiri::HTML(open(@uri)).xpath('//td[@class="resWordCol"]/a').each do |node|
+      Nokogiri::HTML(open(get_uri(DICT_URL, @word))).xpath('//td[@class="resWordCol"]/a').each do |node|
         context_words << node.text
       end
       make_hash_results(context_words)

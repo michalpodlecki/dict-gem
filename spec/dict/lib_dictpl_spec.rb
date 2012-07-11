@@ -9,24 +9,24 @@ describe Dict::Dictpl do
   end
 
   it "should return hash for given word: 'samochód'" do
-    result = Dict::Dictpl.new('samochód', DICT_URL).translate
+    result = Dict::Dictpl.new('samochód').translate
     result.should be_a(Hash)
   end
 
   it "should return array with translations" do
-    d = Dict::Dictpl.new('samochód', DICT_URL)
+    d = Dict::Dictpl.new('samochód')
     d.translate
     d.translations.should be_a(Array)
   end
 
   it "should return array with examples of translated words" do
-    d = Dict::Dictpl.new('samochód', DICT_URL)
+    d = Dict::Dictpl.new('samochód')
     d.translate
     d.examples.should be_a(Array)
   end
 
   it "should return a hash from array of paired values" do
-    d = Dict::Dictpl.new('samochód', DICT_URL)
+    d = Dict::Dictpl.new('samochód')
     d.make_hash_results(d.translate).should be_a(Hash)
   end
 
