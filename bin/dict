@@ -1,8 +1,9 @@
 #!/usr/bin/ruby
 # -*- coding: utf-8 -*-
 
-require 'dict/module_main'
+require 'dict/cli/runner'
 
 opts = Hash.new
 
-Main::main(opts)
+runner = Dict::CLI::Runner.new
+runner.run(opts)

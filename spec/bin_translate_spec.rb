@@ -1,28 +1,32 @@
 # -*- coding: utf-8 -*
-require 'dict/module_main'
+require 'dict/cli/runner'
 
 describe "parameters_valid?" do
   it "should return false if ARGV is empty" do
     stub_const("ARGV", [])
-    Main::parameters_valid?.should == false
+    runner = Dict::CLI::Runner.new
+    runner.parameters_valid?.should == false
   end
 
   it "should return true if ARGV is not empty" do
     stub_const("ARGV", ["słowik", "-t", "36", "-d"])
-    Main::parameters_valid?.should == true
+    runner = Dict::CLI::Runner.new
+    runner.parameters_valid?.should == true
   end
 end
 
 describe "parse_parameters" do
   it "should return Hash for parameters słowik -t 36" do
     stub_const("ARGV", ["słowik", "-t", "36"])
-    opts = Main::parse_parameters
+    runner = Dict::CLI::Runner.new
+    opts = runner.parse_parameters
     {:help=>nil, :time=>"36", :dict=>nil}.should == opts.to_hash
   end
 
   it "should return Hash for parameters słowik" do
     stub_const("ARGV", ["słowik"])
-    opts = Main::parse_parameters
+    runner = Dict::CLI::Runner.new
+    opts = runner.parse_parameters
     {:help=>nil, :time=>nil, :dict=>nil}.should == opts.to_hash
   end
 end
@@ -37,9 +41,10 @@ describe "get_translations" do
 
   it "should return timeout message for word słowik and -t 5" do
     stub_const("ARGV", ["słowik","-t","5"])
-    opts = Main.parse_parameters
+    runner = Dict::CLI::Runner.new
+    opts = runner.parse_parameters
     Dict.should_receive(:get_all_dictionaries_translations).
       and_return { sleep 20 }
-    Main.get_translations(opts, "słowik").should == "Timeout for the query."
+    runner.get_translations(opts, "słowik").should == "Timeout for the query."
   end
 end
