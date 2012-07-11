@@ -10,19 +10,19 @@ module Main
   end
 
   def self.parse_parameters
-    opts = Slop.parse! do 
+    opts = Slop.parse! do
       banner <<-END
 Usage: dict WORD [OPTIONS]
 Search WORD in dict, an open source dictionary aggregator.
       END
-  
+
       on '-h', :help, 'display this help message', :argument => :optional
       on '-t', :time=, 'timeout in seconds, default: 300', :as => :int
       on '-d', :dict=, 'wiktionary|dictpl', :argument => :optional
     end
     opts
   end
-  
+
   def self.get_translations(opts, word)
     Timeout::timeout(opts[:time].to_i || 300) do
       if opts.dict? && opts[:dict] != nil
@@ -31,10 +31,10 @@ Search WORD in dict, an open source dictionary aggregator.
         Dict.get_all_dictionaries_translations(word)
       end
     end
-  rescue 
+  rescue Timeout::Error
     "Timeout for the query."
   end
-  
+
   def self.main(opts)
     begin
       opts = parse_parameters
@@ -55,6 +55,6 @@ Search WORD in dict, an open source dictionary aggregator.
       puts get_translations(opts, ARGV[0])
     end
   end
-  
+
 end
 

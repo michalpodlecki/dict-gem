@@ -16,9 +16,11 @@ class Wiktionary < Dictionary
       end
     end
     make_hash_results(context_words)
-  end 
-  
+  end
+
   def get_html(url)
     Nokogiri::HTML(open(url))
+  rescue OpenURI::HTTPError
+    raise Dictionary::ConnectError
   end
 end
