@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*
 require_relative '../lib/module_main'
 
-describe "check_parameters?" do
-  it "should return true if ARGV is empty" do
+describe "parameters_valid?" do
+  it "should return false if ARGV is empty" do
     stub_const("ARGV", [])
-    Main::check_parameters?.should == true
+    Main::parameters_valid?.should == false
   end
-  
-  it "should return false if ARGV is not empty" do
+
+  it "should return true if ARGV is not empty" do
     stub_const("ARGV", ["słowik", "-t", "36", "-d"])
-    Main::check_parameters?.should == false
+    Main::parameters_valid?.should == true
   end
 end
 
