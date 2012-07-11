@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-require_relative 'wiktionary'
-require_relative 'dictpl'
+require 'dict/wiktionary'
+require 'dict/dictpl'
 require 'json'
 
 module Dict
