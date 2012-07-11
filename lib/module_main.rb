@@ -16,16 +16,16 @@ Usage: dict WORD [OPTIONS]
 Search WORD in dict, an open source dictionary aggregator.
       END
 
-      on '-h', :help, 'display this help message', :argument => :optional
+      on '-h', :help, 'display this help message'
       on '-t', :time=, 'timeout in seconds, default: 300', :as => :int
-      on '-d', :dict=, 'wiktionary|dictpl', :argument => :optional
+      on '-d', :dict=, 'wiktionary|dictpl'
     end
     opts
   end
 
   def self.get_translations(opts, word)
     Timeout::timeout(opts[:time].to_i || 300) do
-      if opts.dict? && opts[:dict]
+      if opts.dict?
         Dict.get_single_dictionary_translations(word, opts[:dict])
       else
         Dict.get_all_dictionaries_translations(word)
@@ -42,8 +42,7 @@ Search WORD in dict, an open source dictionary aggregator.
       abort("Missing argument")
     end
 
-    abort(opts) if opts.help?
-    abort(Dict.available_services) if (opts.dict? && !opts[:dict])
+    abort(opts.to_s) if opts.help?
     parameters_valid? or abort("Please enter a word. (-h for help)")
 
     puts get_translations(opts, ARGV[0])
