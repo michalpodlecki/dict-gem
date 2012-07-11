@@ -10,15 +10,17 @@ module Main
   end
 
   def self.parse_parameters
+    available_dictionaries = Dict.available_services.join(', ')
+
     opts = Slop.parse! do
       banner <<-END
 Usage: dict WORD [OPTIONS]
 Search WORD in dict, an open source dictionary aggregator.
       END
 
-      on '-h', :help, 'display this help message'
-      on '-t', :time=, 'timeout in seconds, default: 300', :as => :int
-      on '-d', :dict=, 'wiktionary|dictpl'
+      on '-h', :help, 'Display this help message'
+      on '-t', :time=, 'Set timeout in seconds. Default: 300', :as => :int
+      on '-d', :dict=, "Select desired dictionary. Available options: #{available_dictionaries}"
     end
     opts
   end
