@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require 'dict'
+require 'dict/dict'
 require 'slop'
 require 'timeout'
 

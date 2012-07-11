@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require_relative '../lib/dict'
+require 'dict/dict'
 
 describe Dict do
 
@@ -9,13 +9,13 @@ describe Dict do
       Dict.get_single_dictionary_translations('samochód', 'dictpl')
     }.to_not raise_error
   end
-  
+
   it "should return hash with translations from all dictionaries" do
     Dict.get_all_dictionaries_translations('samochód').should be_a(Hash)
   end
-  
+
   it "should return array of available services" do
     Dict.available_services.should be_a(Array)
   end
-  
+
 end

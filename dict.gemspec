@@ -1,3 +1,6 @@
+$:.push File.expand_path("../lib", __FILE__)
+require "dict/version"
+
 Gem::Specification.new do |s|
   s.add_dependency 'slop', '~> 3.3.2'
   s.add_dependency 'nokogiri', '~>1.5.5'
@@ -5,7 +8,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
 
   s.name = %q{dict}
-  s.version = "0.2.0"
+  s.version = Dict::VERSION
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
   s.email = ['mtczerwinski@gmail.com']
   s.date = Time.now.strftime('%Y-%m-%d')

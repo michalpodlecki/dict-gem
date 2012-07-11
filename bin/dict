@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 # -*- coding: utf-8 -*-
 
-require_relative '../lib/module_main.rb'
+require 'dict/module_main'
 
 opts = Hash.new
 

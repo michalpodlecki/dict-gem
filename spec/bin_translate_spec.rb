@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*
-require_relative '../lib/module_main'
+require 'dict/module_main'
 
 describe "parameters_valid?" do
   it "should return false if ARGV is empty" do
