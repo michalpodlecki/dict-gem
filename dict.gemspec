@@ -10,18 +10,13 @@ Gem::Specification.new do |s|
   s.email = ['mtczerwinski@gmail.com']
   s.date = Time.now.strftime('%Y-%m-%d')
   s.summary = %q{Gem made for dictionary application}
-  s.files = [
-    "lib/dict.rb",
-    "lib/dictionary.rb",
-    "lib/wiktionary.rb",
-    "lib/dictpl.rb",
-    "lib/module_main.rb"
-  ]
-  s.require_paths = ["lib"]
-  s.executable = 'dict'
   s.description = <<-END
     Dict is an open source dictionary aggregator.
   END
   s.homepage = 'https://github.com/Ragnarson/dict-gem'
 
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.require_paths = ["lib"]
 end
