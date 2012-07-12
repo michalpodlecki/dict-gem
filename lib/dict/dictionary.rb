@@ -5,6 +5,7 @@ require 'open-uri'
 module Dict
   class Dictionary
     attr_accessor :translations, :examples
+
     def initialize(word)
       check_arguments(word)
       @translations = []
@@ -12,7 +13,8 @@ module Dict
       @word = word
     end
 
-    # returns hash with translations as keys and examples as values
+    # returns hash with structure as showed below
+    # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
     def make_hash_results(arr)
       hash = arr.each_slice(2).inject({}) do |h, (key, value)|
         if h.has_key?(key)
@@ -25,8 +27,8 @@ module Dict
       hash
     end
     
-    # returns uri of the dictionary
-    def get_uri(url, word = nil)
+    # returns an instance of URI::HTTP class
+    def uri(url, word = nil)
       word == nil ? URI(URI.escape(url)) : URI(URI.escape(url + word.downcase.tr(' ', '_')))
     end
 
@@ -41,6 +43,7 @@ module Dict
 
     class ConnectError < Exception
       attr_reader :original
+
       def initialize(original = $!)
         @original = original
       end

@@ -14,8 +14,14 @@ describe Dict do
     Dict.get_all_dictionaries_translations('samochód').should be_a(Hash)
   end
 
-  it "should return array of available services" do
-    Dict.available_services.should be_a(Array)
+  it "should return array of available services which is not empty" do
+    arr = Dict.available_dictionaries
+		arr.should be_a(Array)
+		arr.size.should_not == 0
   end
+
+	it "should return array of available services which contains wiktionary and dictpl" do
+		Dict.available_dictionaries.should == ['wiktionary', 'dictpl']
+	end
 
 end

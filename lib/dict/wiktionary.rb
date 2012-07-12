@@ -7,11 +7,12 @@ WIKI_URL = 'http://en.wiktionary.org/wiki/'
 
 module Dict
   class Wiktionary < Dictionary
-    # returns hash with translations as keys and examples as values
-    def translate
+    # returns hash with structure as showed below
+    # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
+		def translate
       context_words = []
-      get_html(get_uri(WIKI_URL, @word)).css('p + ol li a').each do |node|
-        get_html(get_uri(WIKI_URL, node.text)).css('p + ol > li dl dd').each do |example|
+      get_html(uri(WIKI_URL, @word)).css('p + ol li a').each do |node|
+        get_html(uri(WIKI_URL, node.text)).css('p + ol > li dl dd').each do |example|
           context_words << node.text << example.text
         end
       end
