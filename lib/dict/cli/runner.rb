@@ -40,7 +40,7 @@ Search WORD in dict, an open source dictionary aggregator.
       def expected_argument_description(option)
         case option
         when "dict"
-          Dict.available_services.join(', ')
+          Dict.available_dictionaries.join(', ')
         when "time"
           "number of seconds"
         else

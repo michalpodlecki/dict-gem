@@ -52,7 +52,8 @@ end
 
 describe "CLI::Runner" do
   HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help      Display this help message\n    -t, --time      Set timeout in seconds. Default: 300\n    -d, --dict      Select desired dictionary. Available options: wiktionary, dictpl"
-
+  DICT_MSG = "Missing argument. Expected: wiktionary, dictpl"
+  TIME_MSG = "Missing argument. Expected: number of seconds"
 
   it "should call abort when program is called with -h" do
     stub_const("ARGV",["-h"])
@@ -65,20 +66,18 @@ describe "CLI::Runner" do
   end
 
   it "should try to display meaningful information when -d option arguments are missing" do
-    pending
     stub_const("ARGV",["-d"])
     runner = Dict::CLI::Runner.new
-    runner.should_receive(:expected_argument_description).with("dict")
+    runner.should_receive(:abort).with(DICT_MSG).and_raise(SystemExit)
     expect {
       runner.run
     }.to raise_error(SystemExit)
   end
 
   it "should try to display meaningful information when -t option arguments are missing" do
-    pending
     stub_const("ARGV",["-t"])
     runner = Dict::CLI::Runner.new
-    runner.should_receive(:expected_argument_description).with("time")
+    runner.should_receive(:abort).with(TIME_MSG).and_raise(SystemExit)
     expect {
       runner.run
     }.to raise_error(SystemExit)
