@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
   s.add_development_dependency "vcr"
   s.add_development_dependency "activesupport"
+  s.add_development_dependency "fakeweb"
 
   s.name = %q{dict}
   s.version = Dict::VERSION
