@@ -9,7 +9,7 @@ module Dict
   class Dictpl < Dictionary
     # returns hash with structure as showed below
     # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
-		def translate
+    def translate
       context_words = []
       Nokogiri::HTML(open(uri(DICT_URL, @word))).xpath('//td[@class="resWordCol"]/a').each do |node|
         context_words << node.text
