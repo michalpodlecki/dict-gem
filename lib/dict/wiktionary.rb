@@ -9,7 +9,7 @@ module Dict
   class Wiktionary < Dictionary
     # returns hash with structure as showed below
     # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
-		def translate
+    def translate
       context_words = []
       get_html(uri(WIKI_URL, @word)).css('p + ol li a').each do |node|
         get_html(uri(WIKI_URL, node.text)).css('p + ol > li dl dd').each do |example|

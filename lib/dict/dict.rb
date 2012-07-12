@@ -6,8 +6,8 @@ require "yaml"
 
 module Dict
   class << self
-		# returns hash with structure as showed below
-		# { 'DICTIONARY_NAME' => { 'TRANSLATION' => ['EXAMPLE', ...], ... }, ... }
+    # returns hash with structure as showed below
+    # { 'DICTIONARY_NAME' => { 'TRANSLATION' => ['EXAMPLE', ...], ... }, ... }
     def get_all_dictionaries_translations(word)
       dictionaries = Hash.new
 
@@ -24,7 +24,7 @@ module Dict
       end
     end
 
-		# returns hash with structure as showed below
+    # returns hash with structure as showed below
     # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
     def get_single_dictionary_translations(word, dictionary)
       case dictionary
