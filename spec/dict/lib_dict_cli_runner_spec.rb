@@ -50,41 +50,37 @@ describe "get_translations" do
   end
 end
 
-describe "runner" do
-  describe "stub for abort when parameter is -h(:all)" do
-    before do
-      Dict::CLI::Runner.any_instance.stub(:abort) {
-        raise SystemExit
-      }
-    end
+describe "CLI::Runner" do
+  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help      Display this help message\n    -t, --time      Set timeout in seconds. Default: 300\n    -d, --dict      Select desired dictionary. Available options: wiktionary, dictpl"
 
-    it "should raise SystemExit after -h parameter" do
-      stub_const("ARGV",["-h"])
-      runner = Dict::CLI::Runner.new
-      opts = runner.parse_parameters
-      expect {
-        runner.run
-      }.to raise_error(SystemExit)
-    end
 
-    it "should try to display meaningful information when -d option arguments are missing" do
-      stub_const("ARGV",["-d"])
-      runner = Dict::CLI::Runner.new
-      runner.should_receive(:expected_argument_description).with("dict")
-      expect {
-        runner.run
-      }.to raise_error(SystemExit)
-    end
-
-    it "should try to display meaningful information when -t option arguments are missing" do
-      stub_const("ARGV",["-t"])
-      runner = Dict::CLI::Runner.new
-      runner.should_receive(:expected_argument_description).with("time")
-      expect {
-        runner.run
-      }.to raise_error(SystemExit)
-    end
+  it "should call abort when program is called with -h" do
+    stub_const("ARGV",["-h"])
+    opts = Slop.new
+    runner = Dict::CLI::Runner.new
+    runner.should_receive(:abort).with(HELP_MSG).and_raise(SystemExit)
+    expect {
+      runner.run
+    }.to raise_error(SystemExit)
   end
 
-end
+  it "should try to display meaningful information when -d option arguments are missing" do
+    pending
+    stub_const("ARGV",["-d"])
+    runner = Dict::CLI::Runner.new
+    runner.should_receive(:expected_argument_description).with("dict")
+    expect {
+      runner.run
+    }.to raise_error(SystemExit)
+  end
 
+  it "should try to display meaningful information when -t option arguments are missing" do
+    pending
+    stub_const("ARGV",["-t"])
+    runner = Dict::CLI::Runner.new
+    runner.should_receive(:expected_argument_description).with("time")
+    expect {
+      runner.run
+    }.to raise_error(SystemExit)
+  end
+end
