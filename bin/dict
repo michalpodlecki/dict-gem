@@ -3,7 +3,5 @@
 
 require 'dict/cli/runner'
 
-opts = Hash.new
-
 runner = Dict::CLI::Runner.new
-runner.run(opts)
+runner.run

@@ -16,8 +16,8 @@ module Dict
 
         opts = Slop.parse! do
           banner <<-END
-    Usage: dict WORD [OPTIONS]
-    Search WORD in dict, an open source dictionary aggregator.
+Usage: dict WORD [OPTIONS]
+Search WORD in dict, an open source dictionary aggregator.
           END
 
           on '-h', :help, 'Display this help message'
@@ -39,11 +39,24 @@ module Dict
         "Timeout for the query."
       end
 
-      def run(opts)
+      def expected_argument_description(option)
+        case option
+        when "dict"
+          Dict.available_services.join(', ')
+        when "time"
+          "number of seconds"
+        else
+          "?"
+        end
+      end
+
+      def run
         begin
           opts = parse_parameters
-        rescue Slop::MissingArgumentError
-          abort("Missing argument")
+        rescue Slop::MissingArgumentError => e
+          incomplete_option = /(.*?) expects an argument/.match(e.to_s)[1]
+          description = expected_argument_description(incomplete_option)
+          abort("Missing argument. Expected: #{description}")
         end
 
         abort(opts.to_s) if opts.help?

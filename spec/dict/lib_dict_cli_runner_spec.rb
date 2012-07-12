@@ -57,16 +57,34 @@ describe "runner" do
         raise SystemExit
       }
     end
-    
+
     it "should raise SystemExit after -h parameter" do
       stub_const("ARGV",["-h"])
       runner = Dict::CLI::Runner.new
       opts = runner.parse_parameters
       expect {
-        runner.run(opts)
+        runner.run
       }.to raise_error(SystemExit)
-    end  
+    end
+
+    it "should try to display meaningful information when -d option arguments are missing" do
+      stub_const("ARGV",["-d"])
+      runner = Dict::CLI::Runner.new
+      Dict::CLI::Runner.any_instance.should_receive(:expected_argument_description).with("dict")
+      expect {
+        runner.run
+      }.to raise_error(SystemExit)
+    end
+
+    it "should try to display meaningful information when -t option arguments are missing" do
+      stub_const("ARGV",["-t"])
+      runner = Dict::CLI::Runner.new
+      Dict::CLI::Runner.any_instance.should_receive(:expected_argument_description).with("time")
+      expect {
+        runner.run
+      }.to raise_error(SystemExit)
+    end
   end
-  
+
 end
 
