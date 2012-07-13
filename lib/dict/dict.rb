@@ -29,7 +29,7 @@ module Dict
     def get_single_dictionary_translations(word, dictionary)
       case dictionary
       when 'wiktionary'
-        Wiktionary.new(word).translate.translations
+        Wiktionary.new(word).translate
       when 'dictpl'
         Dictpl.new(word).translate
       else Dictionary.message
