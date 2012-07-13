@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'open-uri'
+require_relative 'result'
 
 module Dict
   class Dictionary
@@ -11,6 +12,7 @@ module Dict
       @translations = []
       @examples = []
       @word = word
+      @result = Dict::Result.new(@word)
     end
 
     # returns hash with structure as showed below
