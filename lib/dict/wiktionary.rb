@@ -47,12 +47,12 @@ module Dict
     
     # Returns an array containing english translations.
     def extract_english_translations(content)
-      translations_block = /angielski(?:.|\n)+\{\{znaczenia\}\}(.|\n)+(?:\{\{odmiana){1,}/.match(content)
+      translations_block = /język\s+angielski(?:.|\n)+\{\{znaczenia\}\}(.|\n)+(?:\{\{odmiana){1,}/.match(content)
       return [] unless translations_block.instance_of?(MatchData)
       translations_block = translations_block[0].gsub(/odmiana(.|\n)+$/,'')
       translations = translations_block.scan(/:\s*\(\d\.?\d?\)\s*([^\n]+)/)
       translations.map! do |translation|
-        translation[0].gsub(/\[|\]|\{\{[^\}]+\}\}|'/,'').strip
+        translation[0].gsub(/\[|\]|\{\{[^\}]+\}\}|'|<.*/,'').strip
       end
       translations.delete_if(&:empty?)
       translations ||= []

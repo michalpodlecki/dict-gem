@@ -37,4 +37,7 @@ describe Dict::Wiktionary do
     end 
   end
   
+  it "should remove html tags from translations of 'dragon' word" do
+    Dict::Wiktionary.new("dragon").translate.translations.should eq({'dragon' => ['smok']})
+  end
 end
