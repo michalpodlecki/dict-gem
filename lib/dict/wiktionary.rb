@@ -7,16 +7,10 @@ WIKI_URL = 'http://en.wiktionary.org/wiki/'
 
 module Dict
   class Wiktionary < Dictionary
-    # Return a Dict::Result object
+  
+    # Returns an Dict::Result object
 	  def translate
-      url_pl = "http://en.wiktionary.org/w/index.php?title=#{@word}&action=edit"
-      url_en = "http://pl.wiktionary.org/w/index.php?title=#{@word}&action=edit"
-      
-      if polish?(get_html(url_pl).css('textarea#wpTextbox1').first)
-        get_translations(get_html(url_pl).css('textarea#wpTextbox1').first)
-      else
-        get_translations(get_html(url_en).css('textarea#wpTextbox1').first.content, false)
-      end
+      translations.each { |item| @result.add_translation(@result.term, item) }
       
       @result
     end 
@@ -29,28 +23,39 @@ module Dict
     
     private
     def polish?(content)
-       return true if /==Polish==/i.match(content)
-       false
+      ! /==Polish==/i.match(content).nil?
     end
 
-    def get_translations(content, polish = true)
-      if polish
-        translations = /Noun[^\{]+\{\{(?:head\|pl|pl\-noun)[^#]+#\s*\[\[([^\n]+)/.match(content)
-        translations = (translations && translations[1].gsub(/\[|\]/,'').split(', ')) || []
-        translations.each { |item| @result.add_translation(@result.term, item) }
+    # Returns an array containing translations.
+    def translations
+      url_pl = "http://en.wiktionary.org/w/index.php?title=#{@word}&action=edit"
+      url_en = "http://pl.wiktionary.org/w/index.php?title=#{@word}&action=edit"
+      
+      content_pl = get_html(url_pl).css('textarea#wpTextbox1').first
+      if polish?(content_pl)
+        extract_polish_translations(content_pl)
       else
-        translations_block = /angielski(?:.|\n)+\{\{znaczenia\}\}(.|\n)+(?:\{\{odmiana){1,}/.match(content)
-        translations_block = translations_block[0].gsub(/odmiana(.|\n)+$/,'')
-        translations = translations_block.scan(/:\s*\(\d\.?\d?\)\s*([^\n]+)/)
-        translations.map! do |translation|
-          translation[0].gsub(/\[|\]|\{\{[^\}]+\}\}|'/,'').strip
-        end
-        translations.delete_if do |item|
-          item.empty?
-        end
-        translations ||= []
-        translations.each { |item| @result.add_translation(@result.term, item) }
+        extract_english_translations(get_html(url_en).css('textarea#wpTextbox1').first.content)
       end
+    end
+    
+    # Returns an array containing polish translations.
+    def extract_polish_translations(content)
+      translations = /Noun[^\{]+\{\{(?:head\|pl|pl\-noun)[^#]+#\s*\[\[([^\n]+)/.match(content)
+      translations = (translations && translations[1].gsub(/\[|\]/,'').split(', ')) || []
+    end
+    
+    # Returns an array containing english translations.
+    def extract_english_translations(content)
+      translations_block = /angielski(?:.|\n)+\{\{znaczenia\}\}(.|\n)+(?:\{\{odmiana){1,}/.match(content)
+      return [] unless translations_block.instance_of?(MatchData)
+      translations_block = translations_block[0].gsub(/odmiana(.|\n)+$/,'')
+      translations = translations_block.scan(/:\s*\(\d\.?\d?\)\s*([^\n]+)/)
+      translations.map! do |translation|
+        translation[0].gsub(/\[|\]|\{\{[^\}]+\}\}|'/,'').strip
+      end
+      translations.delete_if(&:empty?)
+      translations ||= []
     end
     
     def get_examples(content, polish = true)
