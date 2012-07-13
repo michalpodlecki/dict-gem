@@ -1,6 +1,7 @@
 module Dict
   class Result
-    attr_accessor :term, :translations, :examples
+    attr_reader :term, :translations, :examples
+    
     def initialize(term)
       @term = term
       @translations = {}
@@ -19,10 +20,6 @@ module Dict
       @translations.each_pair do |term,translation|
         yield term, translation
       end
-    end
-
-    def to_s
-      "#{@term}\n#{@dictionaries}\n#{@translations}\n#{@examples}\n"
     end
     
     private
