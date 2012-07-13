@@ -10,7 +10,7 @@ describe Dict::Dictpl do
   end
   
   it "should return array with translations for 'krowa'" do
-    VCR.use_cassette('translations_krowa_cassette') do
+    VCR.use_cassette('dictpl_translations_krowa_cassette') do
 	  d = Dict::Dictpl.new("krowa")
 	  d.translate
 	  d.translations.should be_a(Array)
@@ -19,7 +19,7 @@ describe Dict::Dictpl do
   end
   
   it "should return array with examples for 'krowa'" do
-    VCR.use_cassette('examples_krowa_cassette') do
+    VCR.use_cassette('dictpl_examples_krowa_cassette') do
 	  d = Dict::Dictpl.new("krowa")
 	  d.translate
       d.examples.should be_a(Array)
@@ -28,7 +28,7 @@ describe Dict::Dictpl do
   end
     
   it "should return array with translations for 'samochód'" do
-    VCR.use_cassette('translations_samochod_cassette') do
+    VCR.use_cassette('dictpl_samochod_cassette') do
       d = Dict::Dictpl.new('samochód')
       d.translate
       d.translations.should be_a(Array)
@@ -37,7 +37,7 @@ describe Dict::Dictpl do
   end
   
   it "should return array with examples for 'samochód'" do
-    VCR.use_cassette('examples_samochod_cassette') do
+    VCR.use_cassette('dictpl_samochod_cassette') do
       d = Dict::Dictpl.new('samochód')
       d.translate
       d.examples.should be_a(Array)
@@ -46,7 +46,7 @@ describe Dict::Dictpl do
   end
 
   it "should return a hash from array of paired values" do
-    VCR.use_cassette('paired_value_samochod_cassette') do
+    VCR.use_cassette('dictpl_samochod_cassette') do
       d = Dict::Dictpl.new('samochód')
       d.make_hash_results(d.translate).should be_a(Hash)
     end
