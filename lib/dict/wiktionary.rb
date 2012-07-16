@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'nokogiri'
-require_relative 'dictionary'
+require 'dict/dictionary'
 
 WIKI_URL = 'http://en.wiktionary.org/wiki/'
 

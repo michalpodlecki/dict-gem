@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require 'open-uri'
-require_relative 'result'
+require 'dict/result'
 
 module Dict
   class Dictionary

@@ -1,3 +1,3 @@
 module Dict
-  VERSION = "0.2.2"
+  VERSION = "0.2.4.1"
 end
