@@ -17,16 +17,16 @@ To search for `WORD`:
 ## People
 
 ### Trainees
-- Jan Borwin 
-- Mateusz Czerwiński
-- Kosma Dunikowski
-- Aleksander Gozdek
-- Rafał Ośko
-- Michał Podlecki
+- [Jan Borwin](https://github.com/janiuuuu)
+- [Mateusz Czerwiński](https://github.com/mrfustrr)
+- [Kosma Dunikowski](https://github.com/kdunee)
+- [Aleksander Gozdek](https://github.com/alexgozdek)
+- [Rafał Ośko](https://github.com/rekosko)
+- [Michał Podlecki](https://github.com/michalpodlecki)
 
 ### Mentors
-- Grzegorz Kołodziejczyk
-- Michał Kwiatkowski
+- [Grzegorz Kołodziejczyk](https://github.com/grk)
+- [Michał Kwiatkowski](https://github.com/mkwiatkowski)
 
 ## Made during intership at Ragnarson
 [Ragnarson](http://ragnarson.com/)
