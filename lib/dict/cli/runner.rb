@@ -51,7 +51,7 @@ Search WORD in dict, an open source dictionary aggregator.
       end
 
       MSG = "Usage: dict WORD [OPTIONS]\nTry `dict --help for more information.\n"
-      VERSION = "dict version #{Dict::VERSION} \nCopyright (C) 2012 by Mateusz Czerwiński, Michał Podlecki,\nAleksander Gozdek, Rafał Ośko, Jan Borwin, Kosma Dunikowski\nLicense: MIT\nHomepage: https://github.com/Ragnarson/dict-gem\nSearch WORD in dict, an open source dictionary aggregator.\n" 
+      VERSION = "dict version #{Dict::VERSION}\nSearch WORD in dict, an open source dictionary aggregator.\nCopyright (C) 2012 by Mateusz Czerwiński, Michał Podlecki,\nAleksander Gozdek, Rafał Ośko, Jan Borwin, Kosma Dunikowski\nMentors: Grzegorz Kołodziejski, Michał Kwiatkowski\nMade during intership at Ragnarson http://ragnarson.com\nHosted by Shelly Cloud https://shellycloud.com\nLicense: MIT\nHomepage: https://github.com/Ragnarson/dict-gem\n" 
 
       
       def run
