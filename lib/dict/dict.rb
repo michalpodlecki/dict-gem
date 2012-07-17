@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+-*- coding: utf-8 -*-
 require 'dict/wiktionary'
 require 'dict/dictpl'
 require "yaml"
