@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 
   s.name = %q{dict}
   s.version = Dict::VERSION
-  s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki','Rafał Ośko']
+  s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki', 'Rafał Ośko', 'Kosma Dunikowski']
   s.email = ['mtczerwinski@gmail.com']
   s.date = Time.now.strftime('%Y-%m-%d')
   s.summary = %q{Gem made for dictionary application}
