@@ -22,14 +22,14 @@ describe "parse_parameters" do
     stub_const("ARGV", ["słowik", "-t", "36"])
     runner = Dict::CLI::Runner.new
     opts = runner.parse_parameters
-    {:help=>nil, :time=>"36", :dict=>nil}.should == opts.to_hash
+    {:help=>nil, :time=>"36", :dict=>nil, :version=>nil}.should == opts.to_hash
   end
 
   it "should return Hash for parameters słowik" do
     stub_const("ARGV", ["słowik"])
     runner = Dict::CLI::Runner.new
     opts = runner.parse_parameters
-    {:help=>nil, :time=>nil, :dict=>nil}.should == opts.to_hash
+    {:help=>nil, :time=>nil, :dict=>nil, :version=>nil}.should == opts.to_hash
   end
 end
 
@@ -64,7 +64,7 @@ describe "get_translations" do
 end
 
 describe "CLI::Runner" do
-  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help      Display this help message\n    -t, --time      Set timeout in seconds. Default: 300\n    -d, --dict      Select desired dictionary. Available options: wiktionary, dictpl"
+  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help         Display this help message\n    -t, --time         Set timeout in seconds. Default: 300\n    -d, --dict         Select desired dictionary. Available options: wiktionary, dictpl\n    -v, --version      Information about gem, authors, license"
   DICT_MSG = "Missing argument. Expected: wiktionary, dictpl"
   TIME_MSG = "Missing argument. Expected: number of seconds"
   T_MSG = "Wrong time value."
