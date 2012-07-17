@@ -67,6 +67,7 @@ describe "CLI::Runner" do
   HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help      Display this help message\n    -t, --time      Set timeout in seconds. Default: 300\n    -d, --dict      Select desired dictionary. Available options: wiktionary, dictpl"
   DICT_MSG = "Missing argument. Expected: wiktionary, dictpl"
   TIME_MSG = "Missing argument. Expected: number of seconds"
+  T_MSG = "Wrong time value."
 
   it "should call abort when program is called with -h" do
     stub_const("ARGV",["-h"])
@@ -95,4 +96,14 @@ describe "CLI::Runner" do
       runner.run
     }.to raise_error(SystemExit)
   end
+
+  it "should raise SystemExit and print msg when for parameter -t value is dupa" do
+    stub_const("ARGV",["słowik", "-t","dupa"])
+    runner = Dict::CLI::Runner.new
+    runner.should_receive(:abort).with(T_MSG).and_raise(SystemExit)
+    expect {
+      runner.run
+    }.to raise_error(SystemExit)
+  end
+  
 end

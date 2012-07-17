@@ -26,7 +26,7 @@ Search WORD in dict, an open source dictionary aggregator.
       end
 
       def get_translations(opts, word)
-        Timeout::timeout(opts[:time].to_i || 300) do
+         Timeout::timeout(opts[:time].to_i || 300) do
           if opts.dict?
             Dict.get_single_dictionary_translations(word, opts[:dict])
           else
@@ -55,14 +55,28 @@ Search WORD in dict, an open source dictionary aggregator.
           incomplete_option = /(.*?) expects an argument/.match(e.to_s)[1]
           description = expected_argument_description(incomplete_option)
           abort("Missing argument. Expected: #{description}")
+
         end
-
-        abort(opts.to_s) if opts.help?
-        abort("Please enter a word. (-h for help)") unless parameters_valid?
-
-        puts get_translations(opts, ARGV[0])
+        
+        if opts.help?
+          abort(opts.to_s)
+        else
+          if !parameters_valid?
+            abort("Please enter a word. (-h for help)")    
+          else
+            if opts.time?
+              if opts[:time].to_i == 0
+                abort("Wrong time value.")
+              else
+                puts get_translations(opts, ARGV[0])
+              end
+            else
+              puts get_translations(opts, ARGV[0])
+            end
+          end
+        end
+        
       end
     end
   end
 end
-
