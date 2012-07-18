@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 require 'dict/wiktionary'
-require 'dict/dictpl'
 require "yaml"
 
 module Dict
@@ -30,8 +29,6 @@ module Dict
       case dictionary
       when 'wiktionary'
         Wiktionary.new(word).translate.translations
-      when 'dictpl'
-        Dictpl.new(word).translate
       else Dictionary.message
       end
     rescue Dictionary::ConnectError
@@ -46,7 +43,7 @@ module Dict
 
     # returns array of currently available dictionaries
     def available_dictionaries
-      ['wiktionary', 'dictpl']
+      ['wiktionary']
     end
   end
 end

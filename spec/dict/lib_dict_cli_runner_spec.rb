@@ -37,21 +37,21 @@ end
 
 describe "get_translations" do
   it "should return results from wiktionary and dictpl for word 'słowik'" do
-    VCR.use_cassette('translations_slownik_cassette') do      
+    VCR.use_cassette('translations_slownik_cassette') do
       stub_const("ARGV", ["słowik"])
       runner = Dict::CLI::Runner.new
       opts = runner.parse_parameters
-      runner.get_translations(opts, "słowik").should == {"wiktionary"=>{"słowik"=>["nightingale"]}, "dictpl"=>{"słowik"=>["nightingale"], "słowik białobrewy; Luscinia indicus; Tarsiger indicus (gatunek ptaka)"=>["white-browed bush-robin"], "słowik białosterny; Luscinia pectoralis (gatunek ptaka)"=>["Himalayan rubythroat", "white-tailed rubythroat"], "słowik chiński; pekińczyk żółty; Leiothrix lutea"=>["Pekin robin", "red-billed leiothrix"], "słowik chiński; pekińczyk żółty; pekińczyk koralodzioby; Leiothrix lutea"=>["Peking robin"], "słowik czarnogardły; Luscinia obscura"=>["black-throated blue robin"], "słowik himalajski; Luscinia brunnea (gatunek ptaka)"=>["Indian blue chat", "Indian blue robin"], "słowik modry; Luscinia cyane"=>["Siberian blue robin"], "słowik obrożny; Luscinia johnstoniae; Tarsiger johnstoniae (gatunek ptaka)"=>["collared bush-robin"]}}
-    end 
+      runner.get_translations(opts, "słowik").should == {"wiktionary"=>{"słowik"=>["nightingale"]}}
+    end
   end
 
   it "should return results from selected dictionary for word 'słowik'" do
-    VCR.use_cassette('translations_slownik_cassette') do      
-      stub_const("ARGV", ["słowik", "-d", "dictpl"])
+    VCR.use_cassette('translations_slownik_cassette') do
+      stub_const("ARGV", ["słowik", "-d", "wiktionary"])
       runner = Dict::CLI::Runner.new
       opts = runner.parse_parameters
-      runner.get_translations(opts, "słowik").should == {"słowik"=>["nightingale"], "słowik białobrewy; Luscinia indicus; Tarsiger indicus (gatunek ptaka)"=>["white-browed bush-robin"], "słowik białosterny; Luscinia pectoralis (gatunek ptaka)"=>["Himalayan rubythroat", "white-tailed rubythroat"], "słowik chiński; pekińczyk żółty; Leiothrix lutea"=>["Pekin robin", "red-billed leiothrix"], "słowik chiński; pekińczyk żółty; pekińczyk koralodzioby; Leiothrix lutea"=>["Peking robin"], "słowik czarnogardły; Luscinia obscura"=>["black-throated blue robin"], "słowik himalajski; Luscinia brunnea (gatunek ptaka)"=>["Indian blue chat", "Indian blue robin"], "słowik modry; Luscinia cyane"=>["Siberian blue robin"], "słowik obrożny; Luscinia johnstoniae; Tarsiger johnstoniae (gatunek ptaka)"=>["collared bush-robin"]}
-    end 
+      runner.get_translations(opts, "słowik").should == {"słowik"=>["nightingale"]}
+    end
   end
 
   it "should return timeout message for word słowik and -t 5" do
@@ -65,8 +65,8 @@ describe "get_translations" do
 end
 
 describe "CLI::Runner" do
-  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help         Display this help message\n    -t, --time         Set timeout in seconds. Default: 300\n    -d, --dict         Select desired dictionary. Available options: wiktionary, dictpl\n    -v, --version      Information about gem, authors, license\n    -c, --clean        Remove examples from translation"
-  DICT_MSG = "Missing argument. Expected: wiktionary, dictpl"
+  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help         Display this help message\n    -t, --time         Set timeout in seconds. Default: 300\n    -d, --dict         Select desired dictionary. Available options: wiktionary\n    -v, --version      Information about gem, authors, license\n    -c, --clean        Remove examples from translation"
+  DICT_MSG = "Missing argument. Expected: wiktionary"
   TIME_MSG = "Missing argument. Expected: number of seconds"
   T_MSG = "Wrong time value."
 
@@ -111,8 +111,8 @@ describe "CLI::Runner" do
     stub_const("ARGV",["słowik","--clean"])
     runner = Dict::CLI::Runner.new
     opts = runner.parse_parameters
-    runner.clean_translation(opts, ARGV[0]).should == "słowik : nightingale, nightingale"
+    runner.clean_translation(opts, ARGV[0]).should == "słowik : nightingale"
   end
 
-  
+
 end
