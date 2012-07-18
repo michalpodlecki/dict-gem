@@ -57,13 +57,18 @@ Search WORD in dict, an open source dictionary aggregator.
       def clean_translation(opts, word)
         translation = get_translations(opts, word)
         string = String.new
-        string = string + word + " : "
+        string += word + " : "
         if opts.dict?
           translation[word].each { |x| string << x << ", " }
         else
-          Dict.available_dictionaries.each do |x|
-            translation[x][word].each { |x| string << x << ", " }
+          begin
+            Dict.available_dictionaries.each do |x|
+              translation[x][word].each { |y| string << y << ", " }
+            end
+          rescue NoMethodError
+            return "No translation found."
           end
+          
         end
         2.times { string.chop! }
         string
