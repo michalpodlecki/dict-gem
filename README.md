@@ -12,6 +12,8 @@ To search for `WORD`:
   - `-t` or `--time` 	- used to set timeout in seconds. Default value: 300
   - `-d` or `--dict` 	- used to select desired dictionary
   - `-v` or `--version`	- used to show version, authors, license
+  - `-c` or `--clean`	- used to delete examples from translation
+
 
 
 ## People
