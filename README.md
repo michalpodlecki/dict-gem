@@ -28,8 +28,6 @@ To search for `WORD`:
 - [Grzegorz Kołodziejczyk](https://github.com/grk)
 - [Michał Kwiatkowski](https://github.com/mkwiatkowski)
 
-## Made during intership at Ragnarson
-[Ragnarson](http://ragnarson.com/)
+## Made during internship at [Ragnarson](http://ragnarson.com/)
 
-## Hosted by
-[Shelly Cloud](https://shellycloud.com/)
+## Hosted by [Shelly Cloud](https://shellycloud.com/)
