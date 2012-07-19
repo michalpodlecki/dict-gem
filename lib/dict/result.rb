@@ -1,3 +1,6 @@
+# Objects of this class are returned by methods retrieving translations 
+# from Web dictionaries.
+
 module Dict
   class Result
     attr_reader :term, :translations, :examples

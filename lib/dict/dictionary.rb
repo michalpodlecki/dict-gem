@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# It is a base class for classes fetching results from Web dictionaries.
+
 require 'open-uri'
 require 'dict/result'
 
@@ -15,7 +17,7 @@ module Dict
       @result = Dict::Result.new(@word)
     end
 
-    # returns hash with structure as showed below
+    # Returns hash with structure as showed below
     # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
     def make_hash_results(arr)
       hash = arr.each_slice(2).inject({}) do |h, (key, value)|
@@ -29,12 +31,12 @@ module Dict
       hash
     end
     
-    # returns an instance of URI::HTTP class
+    # Returns an instance of URI::HTTP class.
     def uri(url, word = nil)
       word == nil ? URI(URI.escape(url)) : URI(URI.escape(url + word.downcase.tr(' ', '_')))
     end
 
-    # checks if word was given correctly
+    # Checks if word was given correctly.
     def check_arguments(word)
       raise ArgumentError.new("No given word") if word.empty?
     end

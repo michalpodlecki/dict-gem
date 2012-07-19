@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+# Class fetching translations of given word from wiktionary.org.
+
 require 'nokogiri'
 require 'dict/dictionary'
 
 module Dict
   class Wiktionary < Dictionary
 
-    # Returns an Dict::Result object
+    # Returns an Dict::Result object.
 	  def translate
       translations.each { |item| @result.add_translation(@result.term, item) }
 

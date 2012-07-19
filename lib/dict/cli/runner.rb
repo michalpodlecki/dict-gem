@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# Class, which provides using application in Command Line Interface.
+
 require 'dict/dict'
 require 'dict/version'
 require 'slop'
@@ -54,6 +56,7 @@ Search WORD in dict, an open source dictionary aggregator.
       MSG = "Usage: dict WORD [OPTIONS]\nTry `dict --help for more information.\n"
       VERSION = "dict version #{Dict::VERSION}\nSearch WORD in dict, an open source dictionary aggregator.\nCopyright (C) 2012 by Mateusz Czerwiński, Michał Podlecki,\nAleksander Gozdek, Rafał Ośko, Jan Borwin, Kosma Dunikowski\nMentors: Grzegorz Kołodziejski, Michał Kwiatkowski\nMade during intership at Ragnarson http://ragnarson.com\nHosted by Shelly Cloud https://shellycloud.com\nLicense: MIT\nHomepage: https://github.com/Ragnarson/dict-gem\nSources dictionaries: http://dict.pl, http://pl.wiktionary.org" 
 
+      # Returns only translations of the given word, without example sentences.
       def clean_translation(opts, word)
         translation = get_translations(opts, word)
         string = String.new
