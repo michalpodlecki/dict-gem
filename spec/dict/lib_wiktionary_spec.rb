@@ -38,6 +38,8 @@ describe Dict::Wiktionary do
   end
   
   it "should remove html tags from translations of 'dragon' word" do
-    Dict::Wiktionary.new("dragon").translate.translations.should eq({'dragon' => ['smok']})
+    VCR.use_cassette('translations_dragon_cassette') do
+      Dict::Wiktionary.new("dragon").translate.translations.should eq({'dragon' => ['smok']})
+    end
   end
 end

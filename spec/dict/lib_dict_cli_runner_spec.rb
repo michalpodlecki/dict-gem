@@ -36,12 +36,12 @@ end
 
 
 describe "get_translations" do
-  it "should return results from wiktionary and dictpl for word 'słowik'" do
+  it "should return results from wiktionary and glosbe for word 'słowik'" do
     VCR.use_cassette('translations_slownik_cassette') do
       stub_const("ARGV", ["słowik"])
       runner = Dict::CLI::Runner.new
       opts = runner.parse_parameters
-      runner.get_translations(opts, "słowik").should == {"wiktionary"=>{"słowik"=>["nightingale"]}}
+      runner.get_translations(opts, "słowik").should == {"wiktionary" => {"słowik" => ["nightingale"]}, "glosbe" => {"słowik" => ["nightingale", "bulbul"]}}
     end
   end
 
@@ -65,8 +65,8 @@ describe "get_translations" do
 end
 
 describe "CLI::Runner" do
-  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help         Display this help message\n    -t, --time         Set timeout in seconds. Default: 300\n    -d, --dict         Select desired dictionary. Available options: wiktionary\n    -v, --version      Information about gem, authors, license\n    -c, --clean        Remove examples from translation"
-  DICT_MSG = "Missing argument. Expected: wiktionary"
+  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help         Display this help message\n    -t, --time         Set timeout in seconds. Default: 300\n    -d, --dict         Select desired dictionary. Available options: wiktionary, glosbe\n    -v, --version      Information about gem, authors, license\n    -c, --clean        Remove examples from translation"
+  DICT_MSG = "Missing argument. Expected: wiktionary, glosbe"
   TIME_MSG = "Missing argument. Expected: number of seconds"
   T_MSG = "Wrong time value."
 
@@ -108,10 +108,12 @@ describe "CLI::Runner" do
   end
 
   it "should return string when you use --clean parameter" do
-    stub_const("ARGV",["słowik","--clean"])
-    runner = Dict::CLI::Runner.new
-    opts = runner.parse_parameters
-    runner.clean_translation(opts, ARGV[0]).should == "słowik : nightingale"
+    VCR.use_cassette('slowik_runner_cassette') do
+      stub_const("ARGV",["słowik","--clean"])
+      runner = Dict::CLI::Runner.new
+      opts = runner.parse_parameters
+      runner.clean_translation(opts, ARGV[0]).should == "słowik : nightingale, nightingale, bulbul"
+    end
   end
 
 

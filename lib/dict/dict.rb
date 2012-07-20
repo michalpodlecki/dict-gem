@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 require 'dict/wiktionary'
+require 'dict/glosbe'
+
 require "yaml"
 
 module Dict
@@ -27,9 +29,11 @@ module Dict
     # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
     def get_single_dictionary_translations(word, dictionary)
       case dictionary
-      when 'wiktionary'
-        Wiktionary.new(word).translate.translations
-      else Dictionary.message
+        when 'wiktionary'
+          Wiktionary.new(word).translate.translations
+        when 'glosbe'
+          Glosbe.new(word).translate.translations
+        else Dictionary.message
       end
     rescue Dictionary::ConnectError
       "Couldn't connect to the dictionary."
@@ -43,7 +47,7 @@ module Dict
 
     # Returns array of currently available dictionaries.
     def available_dictionaries
-      ['wiktionary']
+      ['wiktionary', 'glosbe']
     end
   end
 end
