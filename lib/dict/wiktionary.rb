@@ -16,9 +16,11 @@ module Dict
     end
 
     def get_html(url)
-      Nokogiri::HTML(open(URI.encode(url)))
-    rescue OpenURI::HTTPError
-      raise Dictionary::ConnectError
+      begin
+        Nokogiri::HTML(open(URI.encode(url)))
+      rescue OpenURI::HTTPError
+        raise Dictionary::ConnectError
+      end
     end
 
     private
