@@ -7,28 +7,11 @@ require 'dict/result'
 
 module Dict
   class Dictionary
-    attr_accessor :translations, :examples
 
     def initialize(word)
       check_arguments(word)
-      @translations = []
-      @examples = []
       @word = downcase_word(word)
       @result = Dict::Result.new(@word)
-    end
-
-    # Returns hash with structure as showed below
-    # { 'TRANSLATION' => ['EXAMPLE', ...], ... }
-    def make_hash_results(arr)
-      hash = arr.each_slice(2).inject({}) do |h, (key, value)|
-        if h.has_key?(key)
-          h[key].push(value) ; h
-        else
-          h[key] = [value] ; h
-        end
-      end
-      @translations, @examples = hash.keys, hash.values
-      hash
     end
     
     # Returns an instance of URI::HTTP class.
