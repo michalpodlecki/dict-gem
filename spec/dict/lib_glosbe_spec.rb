@@ -16,6 +16,13 @@ describe Dict::Glosbe do
     end
   end
 
+  it "should return empty hash with translations for word asdfff" do
+    VCR.use_cassette('glosbe_translations_asdfff_cassette') do
+      g = Dict::Glosbe.new('asdfff').translate
+      g.translations.should eq({})
+    end
+  end
+
   it "should return translations of polish word 'woda' to english with its examples" do
     VCR.use_cassette('glosbe_translations_woda_cassette') do
       g = Dict::Glosbe.new('woda').translate
@@ -29,6 +36,13 @@ describe Dict::Glosbe do
       g = Dict::Glosbe.new('atomic').translate
       g.translations.should == {"atomic"=>["atomowy", "niepodzielny", "atomistyczny", "jednolity"]}
       g.examples.should == {"atomic"=>["Spektrofotometr absorpcji atomowej", "Atom w lewo", "Pomiary metodą absorpcji atomowej"]}
+    end
+  end
+
+  it "should return translations results for english word 'usage'" do
+    VCR.use_cassette('glosbe_translations_usage_cassette') do
+      g = Dict::Glosbe.new('usage').translate
+      g.translations.should == {"usage"=>["użycie", "obchodzenie", "stosowanie", "stosować", "tradycje", "traktowanie", "użytkowanie", "używać", "zastosowanie", "zużycie", "zwyczaj", "zwyczaje"]}
     end
   end
  end
