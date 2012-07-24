@@ -13,7 +13,7 @@ module Dict
       check_arguments(word)
       @translations = []
       @examples = []
-      @word = word
+      @word = downcase_word(word)
       @result = Dict::Result.new(@word)
     end
 
@@ -51,6 +51,12 @@ module Dict
       def initialize(original = $!)
         @original = original
       end
+    end
+    
+    private
+    # Returns a word with all downcased letters, including polish
+    def downcase_word(word)
+      word.downcase.gsub(/[ĄĆĘŁŃÓŚŹŻ]/, 'Ą' => 'ą', 'Ć' => 'ć', 'Ę' => 'ę', 'Ł' => 'ł', 'Ń' => 'ń', 'Ó' => 'ó', 'Ś' => 'ś', 'Ź' => 'ź', 'Ż' => 'ż')
     end
   end
 end

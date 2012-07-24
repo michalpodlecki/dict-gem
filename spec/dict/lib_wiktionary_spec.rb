@@ -42,4 +42,21 @@ describe Dict::Wiktionary do
       Dict::Wiktionary.new("dragon").translate.translations.should eq({'dragon' => ['smok']})
     end
   end
+  
+  it "should return translations for word written with uppercase letters" do
+    result = Dict::Wiktionary.new('SaMoCHÓd').translate.translations
+    result.should eq({"samochód"=>["car", "automobile"]})
+  end
+  
+  describe "#examples" do
+    it "should return a empty hash of usage examples to 'assdd' word" do
+      result = Dict::Wiktionary.new('field').translate.examples
+      result.should eq({})
+    end
+    
+    it "should return a hash containing usage examples to 'kot' word" do
+      result = Dict::Wiktionary.new('kot').translate.examples
+      result.should eq({"cat" => ["No room to swing a cat."]})
+    end
+  end
 end
