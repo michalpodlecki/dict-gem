@@ -88,7 +88,7 @@ Search WORD in dict, an open source dictionary aggregator.
 
       # Prints single dictionary translations
       def print_single_dictionary_translations(translations_hash)
-        if translations_hash.empty? || translations_hash.class == String
+        if translations_hash.empty?
           puts "We are sorry but given dictionary couldn't find any translations."
         else
           translations_hash.each { |word, translations| puts "Translations for given word: #{word.upcase}\n#{translations.join(', ')}" }
