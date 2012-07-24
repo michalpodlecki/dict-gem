@@ -36,7 +36,7 @@ describe Dict::Wiktionary do
 	  w.should eq({"field"=>["pole", "pole (magnetyczne, elektryczne, sił, itp.)", "pole (skalarne, wektorowe, itp.)", "ciało (liczb rzeczywistych, zespolonych, itp.)", "wystawić (drużynę)", "odpowiadać (na pytania)", "polowy", "polny"]})
     end 
   end
-  
+
   it "should remove html tags from translations of 'dragon' word" do
     VCR.use_cassette('translations_dragon_cassette') do
       Dict::Wiktionary.new("dragon").translate.translations.should eq({'dragon' => ['smok']})
@@ -44,19 +44,25 @@ describe Dict::Wiktionary do
   end
   
   it "should return translations for word written with uppercase letters" do
-    result = Dict::Wiktionary.new('SaMoCHÓd').translate.translations
-    result.should eq({"samochód"=>["car", "automobile"]})
+    VCR.use_cassette('wiktionary_translate_result_uppercase') do
+      result = Dict::Wiktionary.new('SaMoCHÓd').translate.translations
+      result.should eq({"samochód"=>["car", "automobile"]})
+    end
   end
   
   describe "#examples" do
     it "should return a empty hash of usage examples to 'assdd' word" do
-      result = Dict::Wiktionary.new('field').translate.examples
-      result.should eq({})
+      VCR.use_cassette('wiktionary_no_usage_examples') do
+        result = Dict::Wiktionary.new('field').translate.examples
+        result.should eq({})
+      end
     end
     
     it "should return a hash containing usage examples to 'kot' word" do
-      result = Dict::Wiktionary.new('kot').translate.examples
-      result.should eq({"cat" => ["No room to swing a cat."]})
+      VCR.use_cassette('wiktionary_usage_examples_kot') do
+        result = Dict::Wiktionary.new('kot').translate.examples
+        result.should eq({"cat" => ["No room to swing a cat."]})
+      end
     end
   end
 end
