@@ -10,6 +10,7 @@ require 'timeout'
 module Dict
   module CLI
     class Runner
+
       def parameters_valid?
         not ARGV.empty?
       end
@@ -77,6 +78,23 @@ Search WORD in dict, an open source dictionary aggregator.
         string
       end
       
+      # Prints translations from all dictionaries
+      def print_all_dictionaries_translations(results)
+        results.each do |dictionary, translations_hash|
+          puts "Dictionary name - #{dictionary.upcase}"
+          print_single_dictionary_translations(translations_hash)
+        end
+      end
+
+      # Prints single dictionary translations
+      def print_single_dictionary_translations(translations_hash)
+        if translations_hash.empty? || translations_hash.class == String
+          puts "We are sorry but given dictionary couldn't find any translations."
+        else
+          translations_hash.each { |word, translations| puts "Translations for given word: #{word.upcase}\n#{translations.join(', ')}" }
+        end
+      end
+     
       def run
         begin
           opts = parse_parameters
@@ -84,7 +102,6 @@ Search WORD in dict, an open source dictionary aggregator.
           incomplete_option = /(.*?) expects an argument/.match(e.to_s)[1]
           description = expected_argument_description(incomplete_option)
           abort("Missing argument. Expected: #{description}")
-
         end
             
         if opts.help?
@@ -95,7 +112,7 @@ Search WORD in dict, an open source dictionary aggregator.
           if (opts[:time].to_i) == 0
             abort("Wrong time value.")
           else
-            puts get_translations(opts, ARGV[0])
+            print_all_dictionaries_translations(get_translations(opts, ARGV[0]))
           end
         else
           if !parameters_valid?
@@ -104,11 +121,14 @@ Search WORD in dict, an open source dictionary aggregator.
             if opts.clean?
               puts clean_translation(opts, ARGV[0])
             else
-              puts get_translations(opts, ARGV[0])
+              if opts.dict?
+                print_single_dictionary_translations(get_translations(opts, ARGV[0]))
+              else 
+                print_all_dictionaries_translations(get_translations(opts, ARGV[0]))
+              end
             end
           end
         end
-
       end
     end
   end
