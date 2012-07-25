@@ -57,42 +57,44 @@ Wyszukaj SŁOWO w dict, open-source'owym agregatorze słowników.
       MSG = "Przykład użycia: dict SŁOWO [OPCJE]\n `dict --help, aby uzyskać więcej informacji.\n"
       VERSION = "dict wersja #{Dict::VERSION}\nWyszukaj SŁOWO w dict, open-source'owym agregatorze słowników. \nCopyright (C) 2012 by\nZespół:\n  Jan Borwin\n  Mateusz Czerwiński\n  Kosma Dunikowski\n  Aleksander Gozdek\n  Rafał Ośko\n  Michał Podlecki\nMentorzy:\n  Grzegorz Kołodziejski\n  Michał Kwiatkowski\nLicencja: MIT\nStworzono na praktykach w : http://ragnarson.com/\nHosting: Shelly Cloud :\t http://shellycloud.com/\nStrona domowa:\t\t http://github.com/Ragnarson/dict-gem/\nSłowniki:\t\t http://wiktionary.org/\n\t\t\t http://glosbe.com/\n" 
 
-      # Returns only translations of the given word, without example sentences.
-      def clean_translation(opts, word)
-        translation = get_translations(opts, word)
-        string = String.new
-        string += word + " : "
-        if opts.dict?
-          translation[word].each { |x| string << x << ", " }
-        else
-          begin
-            Dict.available_dictionaries.each do |x|
-              translation[x][word].each { |y| string << y << ", " }
-            end
-          rescue NoMethodError
-            return "Nie znaleziono tłumaczenia."
+     # Returns array without duplicates
+      def clean_translation(results)
+        clean = []
+        results.each do |_, translations_hash|
+          translations_hash.each do |_, translations|
+            clean.concat(translations)
           end
-          
         end
-        2.times { string.chop! }
-        string
+        clean.uniq
       end
       
       # Prints translations from all dictionaries
       def print_all_dictionaries_translations(results)
         results.each do |dictionary, translations_hash|
           puts "Nazwa słownika - #{dictionary.upcase}"
-          print_single_dictionary_translations(translations_hash)
+          print_translations(translations_hash)
         end
       end
 
-      # Prints single dictionary translations
-      def print_single_dictionary_translations(translations_hash)
-        if translations_hash.empty?
-          puts "Przepraszamy, ale w wybranym słowniku nie znaleziono tłumaczenia."
+      # Prints translations for given Hash or Array
+      def print_translations(results)
+        if results.empty?
+          puts 'Przepraszamy, ale w wybranym słowniku nie znaleziono tłumaczenia.'
         else
-          translations_hash.each { |word, translations| puts "Tłumaczenia dla słowa: #{word.upcase}\n#{translations.join(', ')}" }
+          if results.instance_of?(Hash)
+            results.each do |_, translations|
+              print_array(translations)
+            end
+          elsif results.instance_of?(Array)
+            print_array(results)
+          end
         end
+      end
+      
+      # Prints array elements one by one vertically
+      def print_array(arr)
+        puts "Znaleziono: #{arr.size} tłumaczeń"
+        arr.each { |el| puts "- #{el}" }
       end
      
       def run
@@ -118,11 +120,11 @@ Wyszukaj SŁOWO w dict, open-source'owym agregatorze słowników.
           if !parameters_valid?
             abort(MSG)
           else
-            if opts.clean?
-              puts clean_translation(opts, ARGV[0])
+            if opts.clean? && !opts.dict?
+              print_translations(clean_translation(get_translations(opts, ARGV[0])))
             else
               if opts.dict?
-                print_single_dictionary_translations(get_translations(opts, ARGV[0]))
+                print_translations(get_translations(opts, ARGV[0]))
               else 
                 print_all_dictionaries_translations(get_translations(opts, ARGV[0]))
               end

@@ -107,12 +107,12 @@ describe "CLI::Runner" do
     }.to raise_error(SystemExit)
   end
 
-  it "should return string when you use --clean parameter" do
+  it "should return array without duplicates when you use --clean parameter" do
     VCR.use_cassette('slowik_runner_cassette') do
       stub_const("ARGV",["słowik","--clean"])
       runner = Dict::CLI::Runner.new
       opts = runner.parse_parameters
-      runner.clean_translation(opts, ARGV[0]).should == "słowik : nightingale, nightingale, bulbul"
+      runner.clean_translation(runner.get_translations(opts, ARGV[0])).should == ["nightingale", "bulbul"]
     end
   end
 
