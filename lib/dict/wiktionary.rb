@@ -9,7 +9,7 @@ module Dict
   class Wiktionary < Dictionary
 
     # Returns an Dict::Result object.
-	  def translate
+    def translate 
       translations.each do |translation|
         @result.add_translation(@result.term, translation.gsub(/(\s[^|\s]+\|)/,' '))
         examples(translation).each { |example| @result.add_example(translation, example) }
