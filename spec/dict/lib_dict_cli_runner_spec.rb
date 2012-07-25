@@ -60,15 +60,15 @@ describe "get_translations" do
     opts = runner.parse_parameters
     Dict.should_receive(:get_all_dictionaries_translations).
       and_return { sleep 20 }
-    runner.get_translations(opts, "słowik").should == "Timeout for the query."
+    runner.get_translations(opts, "słowik").should == "Upłynął limit czasu żądania."
   end
 end
 
 describe "CLI::Runner" do
-  HELP_MSG = "Usage: dict WORD [OPTIONS]\nSearch WORD in dict, an open source dictionary aggregator.\n\n    -h, --help         Display this help message\n    -t, --time         Set timeout in seconds. Default: 300\n    -d, --dict         Select desired dictionary. Available options: wiktionary, glosbe\n    -v, --version      Information about gem, authors, license\n    -c, --clean        Remove examples from translation"
-  DICT_MSG = "Missing argument. Expected: wiktionary, glosbe"
-  TIME_MSG = "Missing argument. Expected: number of seconds"
-  T_MSG = "Wrong time value."
+  HELP_MSG = "Przykład użycia: dict SŁOWO [OPCJE]\nWyszukaj SŁOWO w dict, open-source'owym agregatorze słowników. \n\n    -h, --help         Wyświetl pomoc\n    -t, --time         Ustaw limit czasu żądania w sekundach. Domyślnie: 300\n    -d, --dict         Wybierz słownik. Dostępne są : wiktionary, glosbe\n    -v, --version      Informacje o gemie, autorach, licencji\n    -c, --clean        Nie wyświetlaj przykładów użycia"
+  DICT_MSG = "Brakujący argument. Spodziewano: wiktionary, glosbe"
+  TIME_MSG = "Brakujący argument. Spodziewano: liczba sekund"
+  T_MSG = "Nieprawidłowa wartość czasu."
 
   it "should call abort when program is called with -h" do
     stub_const("ARGV",["-h"])

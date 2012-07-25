@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dict (0.3.3)
+    dict (0.3.4)
       nokogiri (~> 1.5.5)
       slop (~> 3.3.2)
 

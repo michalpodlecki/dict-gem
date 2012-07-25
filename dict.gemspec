@@ -15,9 +15,9 @@ Gem::Specification.new do |s|
   s.authors = ['Aleksander Gozdek', 'Mateusz Czerwinski', 'Michał Podlecki', 'Rafał Ośko', 'Kosma Dunikowski', 'Jan Borwin']
   s.email = ['mtczerwinski@gmail.com']
   s.date = Time.now.strftime('%Y-%m-%d')
-  s.summary = %q{Gem made for dictionary application}
+  s.summary = %q{Gem stworzony dla aplikacji słownikowej}
   s.description = <<-END
-    Dict is an open source dictionary aggregator.
+    Dict to open-source'owy agregator słowników.
   END
   s.homepage = 'https://github.com/Ragnarson/dict-gem'
 

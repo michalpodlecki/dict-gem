@@ -18,15 +18,15 @@ module Dict
       def parse_parameters
         opts = Slop.parse! do
           banner <<-END
-Usage: dict WORD [OPTIONS]
-Search WORD in dict, an open source dictionary aggregator.
+Przykład użycia: dict SŁOWO [OPCJE]
+Wyszukaj SŁOWO w dict, open-source'owym agregatorze słowników. 
           END
 
-          on '-h', :help=, 'Display this help message', :argument => :optional
-          on '-t', :time=, 'Set timeout in seconds. Default: 300', :as => :int
-          on '-d', :dict=, "Select desired dictionary. Available options: #{Dict.available_dictionaries.join(', ')}"
-          on '-v', :version=, "Information about gem, authors, license", :argument => :optional
-          on '-c', :clean=, "Remove examples from translation", :argument => :optional
+          on '-h', :help=, 'Wyświetl pomoc', :argument => :optional
+          on '-t', :time=, 'Ustaw limit czasu żądania w sekundach. Domyślnie: 300', :as => :int
+          on '-d', :dict=, "Wybierz słownik. Dostępne są : #{Dict.available_dictionaries.join(', ')}"
+          on '-v', :version=, "Informacje o gemie, autorach, licencji", :argument => :optional
+          on '-c', :clean=, "Nie wyświetlaj przykładów użycia", :argument => :optional
           
         end
       end
@@ -40,7 +40,7 @@ Search WORD in dict, an open source dictionary aggregator.
           end
         end
       rescue Timeout::Error
-        "Timeout for the query."
+        "Upłynął limit czasu żądania."
       end
 
       def expected_argument_description(option)
@@ -48,14 +48,14 @@ Search WORD in dict, an open source dictionary aggregator.
         when "dict"
           Dict.available_dictionaries.join(', ')
         when "time"
-          "number of seconds"
+          "liczba sekund"
         else
           "?"
         end
       end
 
-      MSG = "Usage: dict WORD [OPTIONS]\nTry `dict --help for more information.\n"
-      VERSION = "dict version #{Dict::VERSION}\nSearch WORD in dict, an open source dictionary aggregator.\nCopyright (C) 2012 by\nTrainees:\n  Jan Borwin\n  Mateusz Czerwiński\n  Kosma Dunikowski\n  Aleksander Gozdek\n  Rafał Ośko\n  Michał Podlecki\nMentors:\n  Grzegorz Kołodziejski\n  Michał Kwiatkowski\nLicense: MIT\nMade during intership at Ragnarson : http://ragnarson.com/\nHosted by Shelly Cloud : http://shellycloud.com/\nHomepage: http://github.com/Ragnarson/dict-gem/\nSources of dictionaries: http://wiktionary.org/\n                         http://glosbe.com/\n" 
+      MSG = "Przykład użycia: dict SŁOWO [OPCJE]\n `dict --help, aby uzyskać więcej informacji.\n"
+      VERSION = "dict wersja #{Dict::VERSION}\nWyszukaj SŁOWO w dict, open-source'owym agregatorze słowników. \nCopyright (C) 2012 by\nZespół:\n  Jan Borwin\n  Mateusz Czerwiński\n  Kosma Dunikowski\n  Aleksander Gozdek\n  Rafał Ośko\n  Michał Podlecki\nMentorzy:\n  Grzegorz Kołodziejski\n  Michał Kwiatkowski\nLicencja: MIT\nStworzono na praktykach w : http://ragnarson.com/\nHosting: Shelly Cloud :\t http://shellycloud.com/\nStrona domowa:\t\t http://github.com/Ragnarson/dict-gem/\nSłowniki:\t\t http://wiktionary.org/\n\t\t\t http://glosbe.com/\n" 
 
       # Returns only translations of the given word, without example sentences.
       def clean_translation(opts, word)
@@ -70,7 +70,7 @@ Search WORD in dict, an open source dictionary aggregator.
               translation[x][word].each { |y| string << y << ", " }
             end
           rescue NoMethodError
-            return "No translation found."
+            return "Nie znaleziono tłumaczenia."
           end
           
         end
@@ -81,7 +81,7 @@ Search WORD in dict, an open source dictionary aggregator.
       # Prints translations from all dictionaries
       def print_all_dictionaries_translations(results)
         results.each do |dictionary, translations_hash|
-          puts "Dictionary name - #{dictionary.upcase}"
+          puts "Nazwa słownika - #{dictionary.upcase}"
           print_single_dictionary_translations(translations_hash)
         end
       end
@@ -89,9 +89,9 @@ Search WORD in dict, an open source dictionary aggregator.
       # Prints single dictionary translations
       def print_single_dictionary_translations(translations_hash)
         if translations_hash.empty?
-          puts "We are sorry but given dictionary couldn't find any translations."
+          puts "Przepraszamy, ale w wybranym słowniku nie znaleziono tłumaczenia."
         else
-          translations_hash.each { |word, translations| puts "Translations for given word: #{word.upcase}\n#{translations.join(', ')}" }
+          translations_hash.each { |word, translations| puts "Tłumaczenia dla słowa: #{word.upcase}\n#{translations.join(', ')}" }
         end
       end
      
@@ -101,7 +101,7 @@ Search WORD in dict, an open source dictionary aggregator.
         rescue Slop::MissingArgumentError => e
           incomplete_option = /(.*?) expects an argument/.match(e.to_s)[1]
           description = expected_argument_description(incomplete_option)
-          abort("Missing argument. Expected: #{description}")
+          abort("Brakujący argument. Spodziewano: #{description}")
         end
             
         if opts.help?
@@ -110,7 +110,7 @@ Search WORD in dict, an open source dictionary aggregator.
           abort(VERSION)
         elsif opts.time?
           if (opts[:time].to_i) == 0
-            abort("Wrong time value.")
+            abort("Nieprawidłowa wartość czasu.")
           else
             print_all_dictionaries_translations(get_translations(opts, ARGV[0]))
           end
