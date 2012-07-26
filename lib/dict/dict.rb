@@ -28,8 +28,6 @@ module Dict
           Glosbe.new(word).translate.translations
         else Dictionary.message
       end
-    rescue Dictionary::ConnectError
-      "Couldn't connect to the dictionary."
     end
 
     # Returns array of currently available dictionaries.
